@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM-Zertifizierungslandschaft 2026 – acterience</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="container">
+      <a class="nav-link active" href="#finder">🎯 Finder</a>
+      <a class="nav-link" href="#catalog">🗺️ Zertifizierungen</a>
+      <a class="nav-link" href="#chart">📊 Vergleich</a>
+      <a class="nav-link" href="#paths">🛤️ Entwicklungspfade</a>
+      <a class="nav-link" href="#providers">🏢 Anbieter</a>
+      <a class="nav-link" href="#strategy">📋 Strategie</a>
+    </div>
+  </nav>
+
+  <!-- Hero + Finder -->
+  <section class="hero" id="finder">
+    <div class="container">
+      <h1 class="hero-title">Projektmanagement-<br>Zertifizierungen 2026</h1>
+      <p class="hero-subtitle">Orientierung & Entwicklungspfade für acterience – Finde in 30 Sekunden die passende Zertifizierung für dein Profil.</p>
+
+      <div class="finder">
+        <div class="finder-header">
+          <div class="finder-icon">🎯</div>
+          <div>
+            <h2>Zertifizierungs-Finder</h2>
+            <p>3 Fragen – deine persönliche Empfehlung</p>
+          </div>
+        </div>
+        <div class="finder-steps" id="finder-dots"></div>
+        <div id="finder-content"></div>
+        <div id="finder-results" class="finder-results"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certification Catalog -->
+  <section class="section" id="catalog">
+    <div class="container">
+      <h2 class="section-title fade-in">Zertifizierungslandkarte</h2>
+      <p class="section-subtitle fade-in">Alle Zertifizierungen im Überblick. Filtere nach Kategorie oder Empfehlungsstufe – klicke für Details.</p>
+
+      <div class="filter-bar fade-in">
+        <span style="font-size:12px;color:var(--text-muted);padding:8px 4px;font-weight:600">KATEGORIE</span>
+        <button class="filter-btn" data-filter-type="category" data-cat="classic">🔵 Klassisch & Hybrid</button>
+        <button class="filter-btn" data-filter-type="category" data-cat="agile">🟠 Agile & Delivery</button>
+        <button class="filter-btn" data-filter-type="category" data-cat="pmo">🟢 PMO & Governance</button>
+        <button class="filter-btn" data-filter-type="category" data-cat="ki">🟣 KI & Innovation</button>
+        <span style="font-size:12px;color:var(--text-muted);padding:8px 12px;font-weight:600;border-left:1px solid var(--border)">EMPFEHLUNG</span>
+        <button class="filter-btn" data-filter-type="recommendation" data-rec="musthave">✅ Must-have</button>
+        <button class="filter-btn" data-filter-type="recommendation" data-rec="empfohlen">👍 Empfohlen</button>
+        <button class="filter-btn" data-filter-type="recommendation" data-rec="strategisch">🎯 Strategisch</button>
+        <button class="filter-btn" data-filter-type="recommendation" data-rec="spezialrolle">🔮 Spezialrolle</button>
+      </div>
+
+      <div class="cert-grid" id="cert-grid"></div>
+    </div>
+  </section>
+
+  <!-- Bubble Chart -->
+  <section class="section" id="chart">
+    <div class="container">
+      <h2 class="section-title fade-in">Kosten vs. Aufwand</h2>
+      <p class="section-subtitle fade-in">Je größer die Bubble, desto höher die strategische Relevanz für acterience. Hover für Details.</p>
+      <div class="chart-container fade-in">
+        <div class="chart-wrapper">
+          <canvas id="bubbleChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Development Paths -->
+  <section class="section" id="paths">
+    <div class="container">
+      <h2 class="section-title fade-in">Empfohlene Entwicklungspfade</h2>
+      <p class="section-subtitle fade-in">5 rollenbasierte Pfade – klicke zum Aufklappen und auf die Stationen für Details.</p>
+      <div class="paths-container fade-in" id="paths-container"></div>
+    </div>
+  </section>
+
+  <!-- Providers -->
+  <section class="section" id="providers">
+    <div class="container">
+      <h2 class="section-title fade-in">Anbieterübersicht</h2>
+      <p class="section-subtitle fade-in">Empfohlene Trainingsanbieter und Prüfungsstellen für acterience.</p>
+      <div class="providers-grid fade-in" id="providers-grid"></div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:16px;font-style:italic" class="fade-in">Kosten, Termine und Anbieterstatus sollten vor jeder Buchung aktuell geprüft werden.</p>
+    </div>
+  </section>
+
+  <!-- Strategy -->
+  <section class="section" id="strategy">
+    <div class="container">
+      <h2 class="section-title fade-in">Strategische Empfehlung</h2>
+      <p class="section-subtitle fade-in">acterience sollte ein modulares Zertifizierungsportfolio auf vier Säulen aufbauen:</p>
+
+      <div class="strategy-pillars fade-in" id="strategy-pillars"></div>
+
+      <div class="fade-in" style="margin-top:40px">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📋 Empfohlenes Vorgehen</h3>
+        <ul class="action-list" id="action-list"></ul>
+      </div>
+
+      <div class="fade-in" style="margin-top:40px;padding:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg)">
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">💡 Kurzfazit</h3>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.7">
+          Die Zertifizierungsstrategie von acterience sollte 2026 auf vier Säulen beruhen:
+          <strong>Klassische und hybride PM-Seniorität</strong> (PMP, PRINCE2, IPMA),
+          <strong>Agile Delivery-Kompetenz</strong> (Scrum.org, PMI-ACP, SAFe),
+          <strong>PMO- und Governance-Fähigkeit</strong> (PMI-PMOCP, P3O) und
+          <strong>KI-Kompetenz im PM</strong> (APMG AIPM, PMI-CPMAI, Fraunhofer KI-Manager).
+          So entsteht kein Zertifizierungs-Sammelsurium, sondern ein klarer, rollenbasierter Entwicklungsrahmen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:40px 0;text-align:center;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border)">
+    <div class="container">
+      PM-Zertifizierungslandschaft 2026 · acterience · Strategische Orientierung & Entwicklungspfade
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

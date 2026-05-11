@@ -189,53 +189,84 @@ const PROVIDERS=[
 function getFinderResults(careerLevel,market,pmRole){
   const cl=CAREER_LEVELS.find(c=>c.id===careerLevel);
   const group=cl?cl.group:'aufbau';
-  // Market relevance mapping
-  const govMarkets=['public','insurance'];
-  const dachMarkets=['automotive','energy','public'];
-  const intlMarkets=['cross_industries','mobility','healthcare'];
-  const isGov=govMarkets.includes(market);
-  const isDach=dachMarkets.includes(market);
-  const isIntl=intlMarkets.includes(market);
-  // Base recommendations by group+role
-  const map={
-    'einstieg|klassisch':['capm','psm1','aipm'],
-    'einstieg|agile':['psm1','aipm','capm'],
-    'einstieg|product':['psm1','aipm','capm'],
-    'einstieg|pmo':['capm','psm1','aipm'],
-    'einstieg|programm':['capm','psm1','aipm'],
-    'einstieg|ki':['psm1','aipm','capm'],
-    'aufbau|klassisch':['pmp','prince2','psm1'],
-    'aufbau|agile':['psm1','pmp','pmiacp'],
-    'aufbau|product':['psm1','pmp','aipm'],
-    'aufbau|pmo':['pmp','prince2','pmocp'],
-    'aufbau|programm':['pmp','prince2','ipma'],
-    'aufbau|ki':['cpmai','aipm','pmp'],
-    'erfahren|klassisch':['pmp','ipma','prince2'],
-    'erfahren|agile':['pmp','safe','pmiacp'],
-    'erfahren|product':['pmp','psm1','safe'],
-    'erfahren|pmo':['pmocp','ipma','prince2'],
-    'erfahren|programm':['ipma','pmp','pmocp'],
-    'erfahren|ki':['cpmai','pmp','fraunhofer'],
-    'spezialist|klassisch':['pmp','ipma','prince2'],
-    'spezialist|agile':['safe','pmiacp','pmp'],
-    'spezialist|product':['psm1','pmp','pmiacp'],
-    'spezialist|pmo':['pmocp','p3o','ipma'],
-    'spezialist|programm':['ipma','pmp','pmocp'],
-    'spezialist|ki':['cpmai','fraunhofer','aipm'],
-    'senior|klassisch':['ipma','pmp','prince2'],
-    'senior|agile':['pmp','safe','ipma'],
-    'senior|product':['pmp','psm1','ipma'],
-    'senior|pmo':['ipma','pmocp','p3o'],
-    'senior|programm':['ipma','pmp','pmocp'],
-    'senior|ki':['fraunhofer','cpmai','pmp']
-  };
-  let key=group+'|'+pmRole;
-  let certs=[...(map[key]||['pmp','psm1','aipm'])];
-  // Market adjustments
-  if(isGov&&!certs.includes('prince2')&&group!=='einstieg')certs.splice(1,0,'prince2');
-  if(isDach&&!certs.includes('ipma')&&group!=='einstieg')certs.splice(Math.min(2,certs.length),0,'ipma');
-  if(isIntl&&!certs.includes('pmp')&&group!=='einstieg')certs.unshift('pmp');
-  // Deduplicate and limit to 3
-  certs=[...new Set(certs)].slice(0,3);
+  
+  // 1. Determine Level Cluster
+  let levelCluster = 'mid'; // aufbau, erfahren
+  if (group === 'einstieg') levelCluster = 'einstieg';
+  if (group === 'spezialist' || group === 'senior') levelCluster = 'senior';
+  
+  // 2. Determine Market Preference
+  const govMarkets = ['public', 'insurance'];
+  const dachMarkets = ['automotive', 'energy'];
+  
+  let marketPref = 'intl'; // default PMP
+  if (govMarkets.includes(market)) marketPref = 'public'; // PRINCE2
+  else if (dachMarkets.includes(market)) marketPref = 'dach'; // IPMA
+  
+  // 3. Decision Tree based on Role
+  let certs = [];
+  
+  switch(pmRole) {
+    case 'agile':
+    case 'product':
+      if (levelCluster === 'einstieg') {
+        certs = ['psm1', 'aipm', 'capm'];
+      } else if (levelCluster === 'senior') {
+        certs = ['safe', marketPref === 'dach' ? 'ipma' : 'pmp', 'fraunhofer'];
+      } else { // mid
+        certs = ['psm1', 'pmiacp', marketPref === 'dach' ? 'ipma' : 'pmp'];
+      }
+      break;
+      
+    case 'ki':
+      if (levelCluster === 'einstieg') {
+        certs = ['aipm', 'psm1', 'capm'];
+      } else if (levelCluster === 'senior') {
+        certs = ['fraunhofer', 'cpmai', marketPref === 'dach' ? 'ipma' : 'pmp'];
+      } else { // mid
+        certs = ['cpmai', 'pmp', 'aipm'];
+      }
+      break;
+      
+    case 'pmo':
+      if (levelCluster === 'einstieg') {
+        certs = ['capm', 'aipm', 'psm1'];
+      } else if (levelCluster === 'senior') {
+        certs = ['p3o', 'ipma', 'pmocp'];
+      } else { // mid
+        certs = ['pmocp', 'prince2', 'pmp'];
+      }
+      break;
+      
+    case 'klassisch':
+    case 'programm':
+    default:
+      // Market determines Pos 1
+      let mktCert = 'pmp';
+      if (marketPref === 'public') mktCert = 'prince2';
+      if (marketPref === 'dach') mktCert = 'ipma';
+      
+      if (levelCluster === 'einstieg') {
+        certs = ['capm', 'psm1', 'aipm'];
+        if(marketPref === 'public') certs = ['prince2', 'capm', 'psm1'];
+      } else if (levelCluster === 'senior') {
+        certs = [mktCert, mktCert === 'ipma' ? 'pmp' : 'ipma', 'pmocp'];
+      } else { // mid
+        certs = [mktCert, mktCert === 'pmp' ? 'prince2' : 'pmp', 'ipma'];
+      }
+      break;
+  }
+  
+  // 4. Deduplicate and limit to 3
+  certs = [...new Set(certs)].filter(Boolean).slice(0, 3);
+  
+  // Fallback
+  if (certs.length < 3) {
+      const fallback = ['pmp', 'psm1', 'aipm'];
+      fallback.forEach(f => {
+          if(!certs.includes(f) && certs.length < 3) certs.push(f);
+      });
+  }
+  
   return certs;
 }

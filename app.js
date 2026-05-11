@@ -279,8 +279,7 @@ return `<div class="path-card" id="path-${p.id}">
 const cert=CERTIFICATIONS.find(c=>c.id===s.certId);
 const name=s.altName||cert?.name||s.certId;
 const color=cert?CATEGORIES[cert.category].color:'#999';
-return `${i>0?'<div class="path-arrow">→</div>':''}
-<div class="path-step">
+return `<div class="path-step">
 <div class="path-step-circle" style="border-color:${color}" onclick="scrollToCert('${s.certId}')">${name}</div>
 <div class="path-step-label">${s.benefit}</div>
 </div>`}).join('')}</div>

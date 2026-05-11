@@ -117,14 +117,14 @@ suitable:['associate_partner','partner','senior_expert'],focus:['ki','strategie'
 ];
 
 const CAREER_LEVELS=[
-{id:'analyst',label:'Analyst',group:'einstieg'},
-{id:'consultant',label:'Consultant',group:'einstieg'},
-{id:'senior_consultant',label:'Senior Consultant',group:'aufbau'},
-{id:'manager',label:'Manager',group:'erfahren'},
-{id:'expert',label:'Expert',group:'spezialist'},
-{id:'senior_expert',label:'Senior Expert',group:'spezialist'},
-{id:'associate_partner',label:'Associate Partner',group:'senior'},
-{id:'partner',label:'Partner',group:'senior'}
+{id:'analyst',label:'Analyst',group:'einstieg',icon:'📊'},
+{id:'consultant',label:'Consultant',group:'einstieg',icon:'💡'},
+{id:'senior_consultant',label:'Senior Consultant',group:'aufbau',icon:'🚀'},
+{id:'manager',label:'Manager',group:'erfahren',icon:'🤝'},
+{id:'expert',label:'Expert',group:'spezialist',icon:'🔬'},
+{id:'senior_expert',label:'Senior Expert',group:'spezialist',icon:'🔭'},
+{id:'associate_partner',label:'Associate Partner',group:'senior',icon:'🏢'},
+{id:'partner',label:'Partner',group:'senior',icon:'🌟'}
 ];
 
 const MARKETS=[

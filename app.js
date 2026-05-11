@@ -46,13 +46,13 @@ else{content.innerHTML='';showFinderResults(results)}
 }
 function renderBackBtn(){return `<button class="finder-back" onclick="goToStep(${finderState.step-1})">← Zurück</button>`}
 function renderCareerStep(){
-return `<div class="finder-step"><h3>Deine aktuelle Karrierestufe bei acterience?</h3><p>Wähle dein Level – die Empfehlung berücksichtigt deine Seniorität.</p><div class="finder-options">${CAREER_LEVELS.map(c=>`<div class="finder-option" onclick="selectCareer('${c.id}')"><div><div class="fo-label">${c.label}</div></div></div>`).join('')}</div></div>`;
+return `<div class="finder-step"><h3>Deine aktuelle Karrierestufe bei acterience?</h3><p>Wähle dein Level – die Empfehlung berücksichtigt deine Seniorität.</p><div class="finder-options">${CAREER_LEVELS.map((c,i)=>`<div class="finder-option" style="animation-delay:${i*0.05}s" onclick="selectCareer('${c.id}')"><div class="fo-icon">${c.icon}</div><div><div class="fo-label">${c.label}</div></div></div>`).join('')}</div></div>`;
 }
 function renderMarketStep(){
-return `<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen.</p><div class="finder-options">${MARKETS.map(m=>`<div class="finder-option" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
+return `<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen.</p><div class="finder-options">${MARKETS.map((m,i)=>`<div class="finder-option" style="animation-delay:${i*0.05}s" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
 }
 function renderRoleStep(){
-return `<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So finden wir die passendste Zertifizierung für dein Aufgabenprofil.</p><div class="finder-options">${PM_ROLES.map(r=>`<div class="finder-option" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
+return `<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So finden wir die passendste Zertifizierung für dein Aufgabenprofil.</p><div class="finder-options">${PM_ROLES.map((r,i)=>`<div class="finder-option" style="animation-delay:${i*0.05}s" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
 }
 function selectCareer(id){finderState.career=id;finderState.step=1;renderFinderStep()}
 function selectMarket(id){finderState.market=id;finderState.step=2;renderFinderStep()}

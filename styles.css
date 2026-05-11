@@ -85,15 +85,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 @media(min-width:1024px){#cert-grid{grid-template-columns:repeat(4,1fr);gap:16px}}
 .cert-group .cert-grid{display:flex;flex-direction:column;gap:16px}
 .cert-group{margin-bottom:0}
-.cert-group-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
-.cert-group-header .cg-dot{width:12px;height:12px;border-radius:50%}
-.cert-group-header h3{font-size:16px;font-weight:700;color:var(--text)}
+.cert-group-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border);min-height:56px}
+.cert-group-header .cg-dot{width:12px;height:12px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.cert-group-header h3{font-size:16px;font-weight:700;color:var(--text);margin:0;line-height:1.2}
 .cert-group-header .cg-count{font-size:12px;color:var(--text-muted);margin-left:auto}
 .filter-summary{font-size:13px;color:var(--text-secondary);margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .filter-summary .filter-reset-all{background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;text-decoration:underline}
-.cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s;cursor:pointer;display:flex;flex-direction:column;height:250px}
+.cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s;cursor:pointer;display:flex;flex-direction:column;height:270px}
 .cert-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.cert-card-top{height:4px}
+.cert-card-top{height:4px;flex-shrink:0}
 .cert-card-body{padding:20px;display:flex;flex-direction:column;flex:1}
 .cert-card .cert-desc{flex:1}
 .cert-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
@@ -103,8 +103,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .cert-card .cert-desc{font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5}
 .cert-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:12px;border-top:1px solid var(--border)}
 .cert-metric-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600;letter-spacing:.3px}
-.cert-metric-value{font-size:14px;font-weight:700;margin-top:2px}
-.cert-stars{color:var(--red);letter-spacing:2px;font-size:13px}
+.cert-metric-value{font-size:12px;font-weight:700;margin-top:2px;line-height:1.2}
+.cert-stars{color:var(--red);letter-spacing:1px;font-size:12px}
 
 .cert-detail{padding:0 20px 20px;display:none;animation:fadeIn .3s ease}
 .cert-detail.visible{display:block}

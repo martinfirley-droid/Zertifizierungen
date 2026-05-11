@@ -76,10 +76,10 @@ const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
 // Find matching provider info
 const prov=PROVIDERS.find(p=>p.name===c.provider||c.provider.includes(p.name));
 const provNote=prov?prov.note:'';
-return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommendation}" id="card-${c.id}">
+return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommendation}" id="card-${c.id}" onclick="toggleCert('${c.id}')">
 <div class="cert-card-top" style="background:${cat.color}"></div>
 <div class="cert-card-body">
-<div class="cert-card-header"><h3>${c.name}</h3><span class="cert-badge" style="background:${rec.color};color:#fff">${rec.label.toUpperCase()}</span></div>
+<div class="cert-card-header"><h3>${c.name}</h3></div>
 <div class="cert-sub">${cat.emoji} ${c.fullName}</div>
 <div class="cert-desc">${c.shortDescription}</div>
 <div class="cert-metrics">
@@ -87,7 +87,6 @@ return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommenda
 <div><div class="cert-metric-label">Aufwand</div><div class="cert-metric-value">${c.effortWeeks}</div></div>
 <div><div class="cert-metric-label">Relevanz</div><div class="cert-metric-value cert-stars">${stars}</div></div>
 </div></div>
-<div class="cert-expand-trigger" onclick="toggleCert('${c.id}')">‣ Klick für Details</div>
 <div class="cert-detail" id="detail-${c.id}">
 <h4>Strategischer Nutzen für acterience</h4>
 <ul>${(c.benefits||[]).map(b=>`<li>${b}</li>`).join('')}</ul>
@@ -99,7 +98,7 @@ ${c.examDetails?`<div class="cert-detail-item"><label>Prüfung</label><p>${c.exa
 </div>
 ${c.costDetail?`<div style="margin-top:12px"><label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600">Kostendetail</label><p style="font-size:13px;margin-top:2px">${c.costDetail}</p></div>`:''}
 ${c.special2026?`<div class="cert-special"><p>⚡ ${c.special2026}</p></div>`:''}
-${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="cert-book-btn">→ Jetzt buchen</a>`:''}
+${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="cert-book-btn" onclick="event.stopPropagation()">→ Jetzt buchen</a>`:''}
 </div></div>`;
 }
 function renderCatalog(){
@@ -154,10 +153,7 @@ existing.innerHTML=`Zeige: <strong>${text}</strong> (${shown} von ${total}) <but
 }else if(existing){existing.remove()}
 }
 function toggleCert(id){
-const el=document.getElementById('detail-'+id);
-const trigger=el.previousElementSibling;
-if(el.classList.contains('visible')){el.classList.remove('visible');trigger.textContent='‣ Klick für Details'}
-else{el.classList.add('visible');trigger.textContent='‣ Weniger anzeigen'}
+document.getElementById('detail-'+id).classList.toggle('visible');
 }
 
 /* TABLE – with integrated provider info */

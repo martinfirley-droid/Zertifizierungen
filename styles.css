@@ -102,8 +102,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .cert-metric-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600;letter-spacing:.3px}
 .cert-metric-value{font-size:14px;font-weight:700;margin-top:2px}
 .cert-stars{color:var(--red);letter-spacing:2px;font-size:13px}
-.cert-expand-trigger{text-align:center;padding:10px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);transition:color .2s}
-.cert-expand-trigger:hover{color:var(--red)}
+
 .cert-detail{padding:0 20px 20px;display:none;animation:fadeIn .3s ease}
 .cert-detail.visible{display:block}
 .cert-detail h4{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-top:16px;margin-bottom:8px}

@@ -221,25 +221,25 @@ function renderChart(){
 const ctx=document.getElementById('bubbleChart');
 if(!ctx)return;
 const labelConfig={
-'PMP':{anchor:'start',align:'left',offset:6},
-'PSM I / PSPO I':{anchor:'end',align:'top',offset:8},
-'CAPM':{anchor:'end',align:'right',offset:6},
-'APMG AIPM':{anchor:'start',align:'bottom',offset:8},
+'PMP':{anchor:'end',align:'right',offset:6},
+'PSM I / PSPO I':{anchor:'start',align:'left',offset:4},
+'CAPM':{anchor:'end',align:'bottom',offset:4},
+'APMG AIPM':{anchor:'start',align:'bottom',offset:6},
 'SAFe':{anchor:'end',align:'right',offset:6},
-'PMI-ACP':{anchor:'start',align:'left',offset:6},
-'PMI-CPMAI':{anchor:'start',align:'left',offset:6},
+'PMI-ACP':{anchor:'start',align:'top',offset:6},
+'PMI-CPMAI':{anchor:'end',align:'top',offset:6},
 'PMI-PMOCP':{anchor:'end',align:'top',offset:6},
 'PRINCE2 Agile':{anchor:'end',align:'right',offset:6},
-'P3O':{anchor:'start',align:'bottom',offset:8},
-'IPMA Level C/B':{anchor:'start',align:'left',offset:6},
-'Fraunhofer KI-Manager':{anchor:'start',align:'left',offset:6}
+'P3O':{anchor:'start',align:'bottom',offset:6},
+'IPMA Level C/B':{anchor:'start',align:'bottom',offset:6},
+'Fraunhofer KI-Manager':{anchor:'start',align:'bottom',offset:6}
 };
 const datasets=Object.values(CATEGORIES).map(cat=>{
 const certs=CERTIFICATIONS.filter(c=>c.category===cat.id);
-return{label:cat.label,backgroundColor:cat.color+'44',borderColor:cat.color,borderWidth:2,
-data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*5+4,certName:c.name,certCost:c.costLabel,certEffort:c.effortWeeks})),
-datalabels:{display:true,color:cat.color,clamp:true,
-font:{weight:'bold',size:10},
+return{label:cat.label,backgroundColor:cat.color+'66',borderColor:cat.color,borderWidth:2,
+data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*3+6,certName:c.name,certCost:c.costLabel,certEffort:c.effortWeeks})),
+datalabels:{display:true,color:'#111',backgroundColor:'#ffffffcc',borderRadius:4,padding:{top:3,bottom:3,left:5,right:5},
+font:{weight:'bold',size:10,family:'"Segoe UI", sans-serif'},
 formatter:(_,ctx2)=>ctx2.dataset.data[ctx2.dataIndex].certName,
 anchor:function(ctx2){const name=ctx2.dataset.data[ctx2.dataIndex].certName;return labelConfig[name]?.anchor||'end'},
 align:function(ctx2){const name=ctx2.dataset.data[ctx2.dataIndex].certName;return labelConfig[name]?.align||'top'},
@@ -250,13 +250,14 @@ const legend=document.getElementById('chart-legend');
 legend.innerHTML=Object.values(CATEGORIES).map(c=>`<div class="chart-legend-item"><div class="chart-legend-dot" style="background:${c.color}"></div>${c.label}</div>`).join('');
 new Chart(ctx,{type:'bubble',data:{datasets},
 plugins:[ChartDataLabels],
-options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.6,
-layout:{padding:{top:30,right:40,bottom:10,left:10}},
-plugins:{legend:{display:false},datalabels:{},
-tooltip:{callbacks:{title:items=>items[0]?.raw?.certName||'',
-label:item=>[`Kosten: ${item.raw.certCost}`,`Aufwand: ${item.raw.certEffort}`,`Relevanz: ${Math.round((item.raw.r-4)/5)}/5`]}}},
-scales:{x:{title:{display:true,text:'Kosten (€)',font:{weight:'bold'}},ticks:{callback:v=>v>=1000?v/1000+'k €':v+' €'},grid:{color:'#E2E2E2'},min:0},
-y:{title:{display:true,text:'Aufwand (Stunden)',font:{weight:'bold'}},grid:{color:'#E2E2E2'},min:0,max:140}}}});
+options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.8,
+layout:{padding:{top:40,right:50,bottom:20,left:20}},
+plugins:{legend:{display:false},
+tooltip:{backgroundColor:'rgba(255,255,255,0.95)',titleColor:'#111',bodyColor:'#333',borderColor:'#e2e2e2',borderWidth:1,padding:12,boxPadding:6,
+callbacks:{title:items=>items[0]?.raw?.certName||'',
+label:item=>[`Kosten: ${item.raw.certCost}`,`Aufwand: ${item.raw.certEffort}`,`Relevanz: ${Math.round((item.raw.r-6)/3)}/5`]}}},
+scales:{x:{title:{display:true,text:'Kosten (€)',font:{weight:'bold',family:'"Segoe UI", sans-serif'}},ticks:{callback:v=>v>=1000?v/1000+'k €':v+' €',font:{family:'"Segoe UI", sans-serif'}},grid:{color:'#f0f0f0'},min:0,max:5500},
+y:{title:{display:true,text:'Aufwand (Stunden)',font:{weight:'bold',family:'"Segoe UI", sans-serif'}},grid:{color:'#f0f0f0'},min:0,max:150}}}});
 }
 
 /* PATHS */

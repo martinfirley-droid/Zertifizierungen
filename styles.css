@@ -76,8 +76,10 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .filter-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
 .filter-label{font-size:11px;color:var(--text-muted);padding:4px 8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 /* CERT CARDS */
-.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start}
-.cert-group{margin-bottom:32px}
+#cert-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}
+@media(min-width:1024px){#cert-grid{grid-template-columns:repeat(4,1fr);gap:16px}}
+.cert-group .cert-grid{display:flex;flex-direction:column;gap:16px}
+.cert-group{margin-bottom:0}
 .cert-group-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 .cert-group-header .cg-dot{width:12px;height:12px;border-radius:50%}
 .cert-group-header h3{font-size:16px;font-weight:700;color:var(--text)}

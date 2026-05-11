@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
-initFinder();renderCatalog();renderTable();renderChart();renderPaths();renderProviders();initNav();initFadeIn();
+initFinder();renderCatalog();renderTable();renderChart();renderPaths();initNav();initFadeIn();
 });
 
 /* NAV */
@@ -20,7 +20,7 @@ const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targ
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 }
 
-/* FINDER (#3 all combos 3 results, #5 back button, #10 breadcrumb) */
+/* FINDER */
 let finderState={step:0,career:null,market:null,role:null};
 function initFinder(){finderState={step:0,career:null,market:null,role:null};renderFinderStep()}
 function goToStep(n){if(n<finderState.step){finderState.step=n;renderFinderStep()}}
@@ -30,7 +30,6 @@ const content=document.getElementById('finder-content');
 const results=document.getElementById('finder-results');
 results.innerHTML='';
 dots.innerHTML=[1,2,3].map((n,i)=>`<div class="finder-dot ${i<finderState.step?'done':i===finderState.step?'active':''}" ${i<finderState.step?`onclick="goToStep(${i})"`:''} title="${i<finderState.step?'Klick zum Ändern':''}">${i<finderState.step?'✓':n}</div>`).join('');
-// Breadcrumb (#10)
 let bc='';
 const clObj=CAREER_LEVELS.find(c=>c.id===finderState.career);
 const mkObj=MARKETS.find(m=>m.id===finderState.market);
@@ -50,10 +49,10 @@ function renderCareerStep(){
 return `<div class="finder-step"><h3>Deine aktuelle Karrierestufe bei acterience?</h3><p>Wähle dein Level – die Empfehlung berücksichtigt deine Seniorität.</p><div class="finder-options">${CAREER_LEVELS.map(c=>`<div class="finder-option" onclick="selectCareer('${c.id}')"><div><div class="fo-label">${c.label}</div></div></div>`).join('')}</div></div>`;
 }
 function renderMarketStep(){
-return `<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen an PM-Zertifizierungen.</p><div class="finder-options">${MARKETS.map(m=>`<div class="finder-option" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
+return `<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen.</p><div class="finder-options">${MARKETS.map(m=>`<div class="finder-option" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
 }
 function renderRoleStep(){
-return `<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So können wir die passendste Zertifizierung für dein Aufgabenprofil empfehlen.</p><div class="finder-options">${PM_ROLES.map(r=>`<div class="finder-option" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
+return `<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So finden wir die passendste Zertifizierung für dein Aufgabenprofil.</p><div class="finder-options">${PM_ROLES.map(r=>`<div class="finder-option" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
 }
 function selectCareer(id){finderState.career=id;finderState.step=1;renderFinderStep()}
 function selectMarket(id){finderState.market=id;finderState.step=2;renderFinderStep()}
@@ -65,16 +64,18 @@ const cl=CAREER_LEVELS.find(c=>c.id===finderState.career);
 const mk=MARKETS.find(m=>m.id===finderState.market);
 const rl=PM_ROLES.find(r=>r.id===finderState.role);
 const pathMatch=DEVELOPMENT_PATHS.find(p=>{const certSet=p.steps.map(s=>s.certId);return certIds.some(id=>certSet.includes(id))});
-el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>{return `<div class="result-card"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta"><span>💰 ${c.costLabel}</span><span>⏱ ${c.effortWeeks}</span><span>📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div class="result-path"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p>${pathMatch.goal}</p></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
+el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>`<div class="result-card"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta"><span>💰 ${c.costLabel}</span><span>⏱ ${c.effortWeeks}</span><span>📊 Relevanz: ${c.relevance}/5</span></div></div></div>`).join('')}${pathMatch?`<div class="result-path"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p>${pathMatch.goal}</p></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
 }
 
-/* CATALOG (#7 filter counter, #11 reset all) */
+/* CATALOG – grouped by category */
 let activeFilters={category:null,recommendation:null};
-function renderCatalog(){
-const grid=document.getElementById('cert-grid');
-grid.innerHTML=CERTIFICATIONS.map(c=>{
+const REC_ORDER=['musthave','empfohlen','strategisch','spezialrolle','optional'];
+function renderCertCard(c){
 const cat=CATEGORIES[c.category];const rec=RECOMMENDATION_LEVELS[c.recommendation];
 const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
+// Find matching provider info
+const prov=PROVIDERS.find(p=>p.name===c.provider||c.provider.includes(p.name));
+const provNote=prov?prov.note:'';
 return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommendation}" id="card-${c.id}">
 <div class="cert-card-top" style="background:${cat.color}"></div>
 <div class="cert-card-body">
@@ -92,14 +93,31 @@ return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommenda
 <ul>${(c.benefits||[]).map(b=>`<li>${b}</li>`).join('')}</ul>
 <div class="cert-detail-grid">
 <div class="cert-detail-item"><label>Zielgruppe</label><p>${c.targetGroup}</p></div>
-<div class="cert-detail-item"><label>Anbieter</label><p>${c.provider}</p></div>
+<div class="cert-detail-item"><label>Anbieter</label><p>${c.provider}${provNote?' · '+provNote:''}</p></div>
 ${c.recertification?`<div class="cert-detail-item"><label>Rezertifizierung</label><p>${c.recertification}</p></div>`:''}
 ${c.examDetails?`<div class="cert-detail-item"><label>Prüfung</label><p>${c.examDetails}</p></div>`:''}
 </div>
 ${c.costDetail?`<div style="margin-top:12px"><label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600">Kostendetail</label><p style="font-size:13px;margin-top:2px">${c.costDetail}</p></div>`:''}
 ${c.special2026?`<div class="cert-special"><p>⚡ ${c.special2026}</p></div>`:''}
 ${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="cert-book-btn">→ Jetzt buchen</a>`:''}
-</div></div>`}).join('');
+</div></div>`;
+}
+function renderCatalog(){
+const grid=document.getElementById('cert-grid');
+// Sort: by recommendation priority within each category
+const sorted=[...CERTIFICATIONS].sort((a,b)=>REC_ORDER.indexOf(a.recommendation)-REC_ORDER.indexOf(b.recommendation));
+// Group by category
+const catOrder=['classic','agile','pmo','ki'];
+let html='';
+catOrder.forEach(catId=>{
+const cat=CATEGORIES[catId];
+const certs=sorted.filter(c=>c.category===catId);
+if(!certs.length)return;
+html+=`<div class="cert-group" data-group-cat="${catId}">
+<div class="cert-group-header"><div class="cg-dot" style="background:${cat.color}"></div><h3>${cat.emoji} ${cat.label}</h3><span class="cg-count">${certs.length} Zertifizierungen</span></div>
+<div class="cert-grid">${certs.map(c=>renderCertCard(c)).join('')}</div></div>`;
+});
+grid.innerHTML=html;
 document.querySelectorAll('.filter-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
 const type=btn.dataset.filterType;const val=btn.dataset.cat||btn.dataset.rec;
@@ -111,11 +129,20 @@ applyFilters();
 function resetAllFilters(){activeFilters={category:null,recommendation:null};document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));applyFilters()}
 function applyFilters(){
 let shown=0,total=CERTIFICATIONS.length;
+// Filter individual cards
 document.querySelectorAll('.cert-card').forEach(card=>{
 const cat=card.dataset.cat;const rec=card.dataset.rec;
 const show=(!activeFilters.category||cat===activeFilters.category)&&(!activeFilters.recommendation||rec===activeFilters.recommendation);
 card.style.display=show?'':'none';if(show)shown++});
-// Filter summary (#7 + #15)
+// Show/hide category groups
+document.querySelectorAll('.cert-group').forEach(group=>{
+const groupCat=group.dataset.groupCat;
+if(activeFilters.category&&groupCat!==activeFilters.category){group.style.display='none';return}
+const visibleCards=group.querySelectorAll('.cert-card[style=""], .cert-card:not([style])');
+const hasVisible=[...group.querySelectorAll('.cert-card')].some(c=>c.style.display!=='none');
+group.style.display=hasVisible?'':'none';
+});
+// Filter summary
 let existing=document.getElementById('filter-summary');
 if(activeFilters.category||activeFilters.recommendation){
 const catLabel=activeFilters.category?CATEGORIES[activeFilters.category].label:'';
@@ -133,7 +160,7 @@ if(el.classList.contains('visible')){el.classList.remove('visible');trigger.text
 else{el.classList.add('visible');trigger.textContent='‣ Weniger anzeigen'}
 }
 
-/* TABLE (#6 consistent effort format) */
+/* TABLE – with integrated provider info */
 let tableSortCol='relevance',tableSortAsc=false;
 function renderTable(){
 populateTableFilters();renderTableBody();
@@ -167,7 +194,7 @@ data.sort((a,b)=>{
 let va,vb;
 if(tableSortCol==='name'){va=a.name.toLowerCase();vb=b.name.toLowerCase()}
 else if(tableSortCol==='category'){va=a.category;vb=b.category}
-else if(tableSortCol==='recommendation'){va=a.recommendation;vb=b.recommendation}
+else if(tableSortCol==='recommendation'){va=REC_ORDER.indexOf(a.recommendation);vb=REC_ORDER.indexOf(b.recommendation)}
 else if(tableSortCol==='cost'){va=a.costMin;vb=b.costMin}
 else if(tableSortCol==='effort'){va=a.effortHours;vb=b.effortHours}
 else if(tableSortCol==='relevance'){va=a.relevance;vb=b.relevance}
@@ -177,8 +204,10 @@ const body=document.getElementById('cert-table-body');
 body.innerHTML=data.map(c=>{
 const cat=CATEGORIES[c.category];const rec=RECOMMENDATION_LEVELS[c.recommendation];
 const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
-// #6: Show hours + weeks for consistency
 const effortDisplay=`${c.effortHours}h (${c.effortWeeks})`;
+// Integrated provider info
+const prov=PROVIDERS.find(p=>p.name===c.provider||c.provider.includes(p.name));
+const provInfo=prov?`<strong>${c.provider}</strong><br><span style="font-size:10px;color:var(--text-muted)">${prov.format}</span>`:`<strong>${c.provider}</strong>`;
 return `<tr>
 <td><strong>${c.name}</strong><br><span style="font-size:11px;color:var(--text-muted)">${c.fullName}</span></td>
 <td><span class="cat-dot" style="background:${cat.color}"></span>${cat.label}</td>
@@ -186,16 +215,15 @@ return `<tr>
 <td>${c.costLabel}</td>
 <td>${effortDisplay}</td>
 <td style="color:var(--red)">${stars}</td>
-<td>${c.provider}</td>
+<td>${provInfo}</td>
 <td>${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="table-link">Buchen →</a>`:'-'}</td>
 </tr>`}).join('');
 }
 
-/* CHART (#1 label overlap fix, #2 clamp labels) */
+/* CHART */
 function renderChart(){
 const ctx=document.getElementById('bubbleChart');
 if(!ctx)return;
-// Custom label positions to avoid overlap
 const labelConfig={
 'PMP':{anchor:'start',align:'left',offset:6},
 'PSM I / PSPO I':{anchor:'end',align:'top',offset:8},
@@ -260,23 +288,3 @@ return `${i>0?'<div class="path-arrow">→</div>':''}
 }
 function togglePath(id){document.getElementById('path-'+id).classList.toggle('open')}
 function scrollToCert(id){const el=document.getElementById('card-'+id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px var(--red)';setTimeout(()=>el.style.boxShadow='',2000)}}
-
-/* PROVIDERS (#12 recommendation badge) */
-function renderProviders(){
-const grid=document.getElementById('providers-grid');
-grid.innerHTML=PROVIDERS.map(p=>{
-let badgeClass='empfohlen';
-if(p.recommendation.includes('sehr'))badgeClass='sehr';
-if(p.recommendation.includes('notwendig'))badgeClass='notwendig';
-const badgeLabel=p.recommendation.includes('sehr')?'⭐ Sehr empfohlen':p.recommendation.includes('notwendig')?'⚡ Notwendig':'👍 Empfohlen';
-return `<div class="provider-card">
-<h3>${p.name}</h3>
-<div class="prov-focus">${p.focus}</div>
-<span class="prov-rec ${badgeClass}">${badgeLabel}</span>
-<div class="prov-meta">
-<span>📍 ${p.format}</span>
-<span>📌 ${p.note}</span>
-</div>
-<a href="${p.url}" target="_blank" rel="noopener" class="prov-link">→ Website & Buchung</a>
-</div>`}).join('');
-}

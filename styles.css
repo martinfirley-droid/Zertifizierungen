@@ -44,7 +44,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .finder-step{animation:fadeIn .3s ease}
 .finder-step h3{font-size:16px;font-weight:700;margin-bottom:6px}
 .finder-step p{font-size:13px;color:var(--text-muted);margin-bottom:16px}
-.finder-options{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.finder-options{display:flex;flex-direction:column;gap:8px;max-width:480px}
 .finder-option{padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
 .finder-option:hover{border-color:var(--red-accent);background:var(--bg-hover);transform:translateY(-1px)}
 .finder-option .fo-icon{font-size:20px}
@@ -77,6 +77,11 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .filter-label{font-size:11px;color:var(--text-muted);padding:4px 8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 /* CERT CARDS */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start}
+.cert-group{margin-bottom:32px}
+.cert-group-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.cert-group-header .cg-dot{width:12px;height:12px;border-radius:50%}
+.cert-group-header h3{font-size:16px;font-weight:700;color:var(--text)}
+.cert-group-header .cg-count{font-size:12px;color:var(--text-muted);margin-left:auto}
 .filter-summary{font-size:13px;color:var(--text-secondary);margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .filter-summary .filter-reset-all{background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;text-decoration:underline}
 .cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s;cursor:pointer}
@@ -159,15 +164,6 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .provider-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;transition:all .2s}
 .provider-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
 .provider-card h3{font-size:16px;font-weight:700;margin-bottom:4px}
-.provider-card .prov-focus{font-size:12px;color:var(--text-muted);margin-bottom:8px}
-.provider-card .prov-rec{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-bottom:8px}
-.provider-card .prov-rec.sehr{background:rgba(46,139,87,.12);color:#2E8B57}
-.provider-card .prov-rec.empfohlen{background:rgba(43,95,158,.12);color:#2B5F9E}
-.provider-card .prov-rec.notwendig{background:rgba(204,0,0,.1);color:var(--red)}
-.provider-card .prov-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;margin-bottom:12px}
-.provider-card .prov-meta span{color:var(--text-secondary)}
-.provider-card .prov-link{display:inline-block;padding:6px 16px;background:var(--red);color:#fff;text-decoration:none;border-radius:var(--radius);font-size:12px;font-weight:600;transition:background .2s}
-.provider-card .prov-link:hover{background:var(--red-dark)}
 /* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
@@ -185,8 +181,6 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .path-step{flex-direction:row;text-align:left;gap:12px}
 .path-step::before{display:none}
 .path-arrow{transform:rotate(90deg);padding:4px 0}
-.providers-grid{grid-template-columns:1fr}
-.finder-options{grid-template-columns:1fr}
 .table-filter-row{flex-direction:column}
 .table-filter-row input,.table-filter-row select{width:100%}
 }

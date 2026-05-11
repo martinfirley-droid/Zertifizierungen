@@ -11,13 +11,41 @@
 <body>
 <nav class="nav" id="main-nav">
 <div class="container">
+<a class="nav-link" href="#table">📋 Tabelle</a>
 <a class="nav-link active" href="#finder">🎯 Finder</a>
 <a class="nav-link" href="#catalog">🗺️ Zertifizierungen</a>
 <a class="nav-link" href="#paths">🛤️ Entwicklungspfade</a>
-<a class="nav-link" href="#table">📋 Tabelle</a>
 <a class="nav-link" href="#chart">📊 Vergleich</a>
 </div>
 </nav>
+
+<section class="section" id="table" style="padding-top:40px">
+<div class="container">
+<h2 class="section-title fade-in">Alle Schulungen im Überblick</h2>
+<p class="section-subtitle fade-in">Sortier- und filterbare Tabelle mit allen Zertifizierungen, Kosten und Buchungslinks.</p>
+<div class="table-filter-row fade-in">
+<input type="text" id="table-search" placeholder="🔍 Suche...">
+<select id="table-cat-filter"><option value="">Alle Kategorien</option></select>
+<select id="table-rec-filter"><option value="">Alle Empfehlungen</option></select>
+</div>
+<div class="table-wrapper fade-in">
+<table class="cert-table" id="cert-table">
+<thead><tr>
+<th data-sort="name">Zertifizierung <span class="sort-icon">↕</span></th>
+<th data-sort="category">Kategorie <span class="sort-icon">↕</span></th>
+<th data-sort="recommendation">Empfehlung <span class="sort-icon">↕</span></th>
+<th data-sort="cost">Kosten <span class="sort-icon">↕</span></th>
+<th data-sort="effort">Aufwand <span class="sort-icon">↕</span></th>
+<th data-sort="relevance">Relevanz <span class="sort-icon">↕</span></th>
+<th>Anbieter</th>
+<th>Buchen</th>
+</tr></thead>
+<tbody id="cert-table-body"></tbody>
+</table>
+</div>
+<p style="font-size:12px;color:var(--text-muted);margin-top:16px;font-style:italic" class="fade-in">Alle Preise ohne Gewähr. Kosten, Termine und Konditionen vor Buchung aktuell prüfen. Stand: Mai 2026.</p>
+</div>
+</section>
 
 <section class="hero" id="finder">
 <div class="container">
@@ -59,33 +87,7 @@
 </div>
 </section>
 
-<section class="section" id="table">
-<div class="container">
-<h2 class="section-title fade-in">Alle Schulungen im Überblick</h2>
-<p class="section-subtitle fade-in">Sortier- und filterbare Tabelle mit allen Zertifizierungen, Kosten und Buchungslinks.</p>
-<div class="table-filter-row fade-in">
-<input type="text" id="table-search" placeholder="🔍 Suche...">
-<select id="table-cat-filter"><option value="">Alle Kategorien</option></select>
-<select id="table-rec-filter"><option value="">Alle Empfehlungen</option></select>
-</div>
-<div class="table-wrapper fade-in">
-<table class="cert-table" id="cert-table">
-<thead><tr>
-<th data-sort="name">Zertifizierung <span class="sort-icon">↕</span></th>
-<th data-sort="category">Kategorie <span class="sort-icon">↕</span></th>
-<th data-sort="recommendation">Empfehlung <span class="sort-icon">↕</span></th>
-<th data-sort="cost">Kosten <span class="sort-icon">↕</span></th>
-<th data-sort="effort">Aufwand <span class="sort-icon">↕</span></th>
-<th data-sort="relevance">Relevanz <span class="sort-icon">↕</span></th>
-<th>Anbieter</th>
-<th>Buchen</th>
-</tr></thead>
-<tbody id="cert-table-body"></tbody>
-</table>
-</div>
-<p style="font-size:12px;color:var(--text-muted);margin-top:16px;font-style:italic" class="fade-in">Alle Preise ohne Gewähr. Kosten, Termine und Konditionen vor Buchung aktuell prüfen. Stand: Mai 2026.</p>
-</div>
-</section>
+
 
 <section class="section" id="chart">
 <div class="container">
@@ -102,7 +104,7 @@
 <div class="container">PM-Zertifizierungslandschaft 2026 · acterience management partners · Stand Mai 2026</div>
 </footer>
 
-<script src="data.js?v=9"></script>
-<script src="app.js?v=9"></script>
+<script src="data.js?v=11"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

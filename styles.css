@@ -46,12 +46,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .finder-step{animation:fadeIn .3s ease}
 .finder-step h3{font-size:16px;font-weight:700;margin-bottom:6px}
 .finder-step p{font-size:13px;color:var(--text-muted);margin-bottom:16px}
-.finder-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}
-.finder-option{padding:16px 20px;background:#fff;border:2px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;transition:all .3s cubic-bezier(0.175,0.885,0.32,1.275);display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);position:relative;overflow:hidden;animation:fadeInUp .4s ease backwards}
+.finder-options{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.finder-option{padding:16px 20px;background:#fff;border:2px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;transition:all .3s cubic-bezier(0.175,0.885,0.32,1.275);display:flex;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.02);position:relative;overflow:hidden;animation:fadeInUp .4s ease backwards}
 .finder-option:hover{border-color:var(--red);box-shadow:0 8px 24px rgba(204,0,0,0.1);transform:translateY(-2px)}
 .finder-option::after{content:'→';position:absolute;right:20px;font-size:18px;color:var(--red);opacity:0;transform:translateX(-10px);transition:all .3s}
 .finder-option:hover::after{opacity:1;transform:translateX(0)}
-.finder-option .fo-icon{font-size:24px;width:32px;text-align:center}
 .finder-option .fo-label{font-size:15px;font-weight:700;color:var(--text);transition:color .3s}
 .finder-option:hover .fo-label{color:var(--red)}
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

@@ -144,15 +144,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .chart-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
 .chart-legend-dot{width:10px;height:10px;border-radius:50%}
 /* PATHS */
-.path-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden;transition:box-shadow .3s}
-.path-card:hover{box-shadow:var(--shadow)}
-.path-header{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer;transition:background .2s}
-.path-header:hover{background:var(--bg-hover)}
-.path-badge{padding:4px 12px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.5px;color:#fff;white-space:nowrap}
-.path-header h3{font-size:16px;font-weight:700;flex:1}
-.path-header .path-meta{font-size:12px;color:var(--text-muted);max-width:400px}
-.path-chevron{color:var(--text-muted);transition:transform .3s;font-size:16px}
-.path-card.open .path-chevron{transform:rotate(180deg)}
+.path-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;transition:all .3s cubic-bezier(0.165,0.84,0.44,1);box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+.path-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.06);transform:translateY(-2px);border-color:var(--border-hover)}
+.path-header{display:flex;align-items:center;gap:16px;padding:24px;cursor:pointer;transition:background .3s ease;position:relative}
+.path-header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,var(--red),var(--red-accent));opacity:0;transition:opacity .3s ease}
+.path-card:hover .path-header::before,.path-card.open .path-header::before{opacity:1}
+.path-header:hover{background:linear-gradient(to right,rgba(204,0,0,0.02),transparent)}
+.path-info{flex:1}
+.path-header h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;transition:color .3s}
+.path-card:hover .path-header h3{color:var(--red)}
+.path-header .path-meta{font-size:14px;color:var(--text-secondary);font-weight:500}
+.path-chevron{color:var(--text-muted);transition:all .4s cubic-bezier(0.165,0.84,0.44,1);font-size:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--bg-alt);border-radius:50%}
+.path-card:hover .path-chevron{background:var(--red);color:#fff;transform:scale(1.1)}
+.path-card.open .path-chevron{transform:rotate(180deg);background:var(--red);color:#fff}
 .path-body{padding:0 24px 24px;display:none}
 .path-card.open .path-body{display:block;animation:fadeIn .3s ease}
 .path-goal{font-size:14px;color:var(--text);margin-bottom:32px;background:var(--bg-alt);padding:12px 16px;border-radius:var(--radius-md);border-left:4px solid var(--red)}

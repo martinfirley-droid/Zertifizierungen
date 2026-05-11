@@ -4,9 +4,13 @@ const CERTIFICATIONS=[
 {id:'pmp',name:'PMP',fullName:'Project Management Professional',category:'classic',recommendation:'musthave',
 targetGroup:'Senior Consultant, Manager, Associate Partner, Partner',
 shortDescription:'Wichtigster internationaler Senioritätsnachweis im Projektmanagement.',
-costMin:2000,costMax:3500,costLabel:'2.000–3.500 €',costDetail:'Prüfung: 405 USD (PMI-Mitglied) / 555 USD + Kurs ca. 1.500–2.500 €',
+costMin:2000,costMax:2500,
 effortHours:120,effortLabel:'100–150 Stunden',effortWeeks:'8–12 Wochen',relevance:5,
-provider:'KAYENTA (PMI ATP)',bookingUrl:'https://www.kayenta.de',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '~520 €', priceUsd: '555 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/project-management-pmp'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'KAYENTA / ATPs', url: 'https://www.kayenta.de'}
+],
+
 benefits:['Globale Anerkennung und Reputationsgewinn','Nachweis strategischer PM-Kompetenz','Anschlussfähigkeit bei internationalen Kunden','Potenzial für höhere Tagessätze'],
 special2026:'Ab 9. Juli 2026 stärkere Ausrichtung auf Value Delivery, KI-Integration, Nachhaltigkeit.',
 recertification:'Alle 3 Jahre, 60 PDUs',examDetails:'180 szenariobasierte Fragen, 230 Minuten',
@@ -15,9 +19,13 @@ suitable:['senior_consultant','manager','associate_partner','partner'],focus:['c
 {id:'psm1',name:'PSM I / PSPO I',fullName:'Professional Scrum Master / Product Owner (Scrum.org)',category:'agile',recommendation:'musthave',
 targetGroup:'Analyst, Consultant, Senior Consultant',
 shortDescription:'Agiles Basisfundament mit sehr hohem ROI – dauerhaft gültig.',
-costMin:150,costMax:400,costLabel:'190 € (200 USD)',costDetail:'200 USD pro Prüfung, lebenslang gültig, keine Rezertifizierung',
+costMin:150,costMax:200,
 effortHours:20,effortLabel:'1–2 Wochen Selbststudium',effortWeeks:'1–2 Wochen',relevance:5,
-provider:'Scrum.org',bookingUrl:'https://www.scrum.org/assessments',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '190 €', priceUsd: '200 USD', provider: 'Scrum.org', url: 'https://www.scrum.org/assessments'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.000–1.500 €', priceUsd: '', provider: 'Diverse', url: 'https://www.scrum.org/classes'}
+],
+
 benefits:['Gemeinsames agiles Vokabular','Schnelle Einsatzfähigkeit in agilen Kundenprojekten','Hoher Nutzen bei IT- und Transformationsmandaten','Sehr gutes Kosten-Nutzen-Verhältnis'],
 recertification:'Nicht erforderlich – dauerhaft gültig',
 suitable:['analyst','consultant','senior_consultant','manager'],focus:['agile'],environment:['international','konzern','it']},
@@ -25,9 +33,13 @@ suitable:['analyst','consultant','senior_consultant','manager'],focus:['agile'],
 {id:'cpmai',name:'PMI-CPMAI',fullName:'Certified Professional in Managing AI',category:'ki',recommendation:'strategisch',
 targetGroup:'Expert, Senior Expert, Senior Consultant (KI-Fokus)',
 shortDescription:'Starkes Differenzierungsmerkmal für professionelle KI-Projektsteuerung.',
-costMin:700,costMax:900,costLabel:'650–850 € (699–899 USD)',costDetail:'699 USD (PMI-Mitglied) / 899 USD (Nicht-Mitglied) inkl. Prep Course',
+costMin:1500,costMax:2500,
 effortHours:70,effortLabel:'5–8 Wochen',effortWeeks:'5–8 Wochen',relevance:5,
-provider:'PMI',bookingUrl:'https://www.pmi.org/certifications/managing-ai-cpmai',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (inkl. E-Learning)', priceEur: '850 €', priceUsd: '899 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/managing-ai-cpmai'},
+{type: 'course', label: 'Geführter Kurs (Live Bootcamp)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'Diverse ATPs', url: 'https://www.pmi.org'}
+],
+
 benefits:['Differenzierungsmerkmal im KI-Consulting','Steuerung komplexer KI-Projekte','Data Governance, AI Ethics, Model Drift','Starkes Kundensignal bei KI-Investitionen'],
 examDetails:'120 szenariobasierte Fragen, 160 Minuten',
 suitable:['senior_consultant','manager','expert','senior_expert'],focus:['ki'],environment:['international','konzern','it']},
@@ -35,9 +47,13 @@ suitable:['senior_consultant','manager','expert','senior_expert'],focus:['ki'],e
 {id:'ipma',name:'IPMA Level C/B',fullName:'IPMA / GPM Level C oder B',category:'classic',recommendation:'strategisch',
 targetGroup:'Manager, Associate Partner, Partner',
 shortDescription:'Besonders wertvoll für DACH-Markt, Public Sector und Automotive.',
-costMin:5000,costMax:8000,costLabel:'5.000–8.000 €',costDetail:'Prüfung: 2.365–2.695 € + Lehrgang 3.000–5.000 €',
+costMin:5000,costMax:7500,
 effortHours:120,effortLabel:'Sehr hoch (Reports + Assessment)',effortWeeks:'3–6 Monate',relevance:4,
-provider:'PM-ZERT / Decisio',bookingUrl:'https://www.pm-zert.de',
+bookingOptions: [
+{type: 'self', label: 'Nur Prüfung (PM-ZERT)', priceEur: '~2.500 €', priceUsd: '', provider: 'PM-ZERT', url: 'https://www.pm-zert.de'},
+{type: 'course', label: 'Geführter Lehrgang (+ Prüfung)', priceEur: '5.500–7.500 €', priceUsd: '', provider: 'Decisio / GPM', url: 'https://www.decisio.de'}
+],
+
 benefits:['Hohe Akzeptanz im DACH-Raum','Nachweis echter Führungskompetenz','Stark in Public Sector, Automotive, Maschinenbau','Kompetenzbasiert statt nur wissensbasiert'],
 recertification:'Alle 5 Jahre',
 suitable:['manager','associate_partner','partner'],focus:['classic','leadership'],environment:['dach','public','automotive']},
@@ -45,27 +61,38 @@ suitable:['manager','associate_partner','partner'],focus:['classic','leadership'
 {id:'pmocp',name:'PMI-PMOCP',fullName:'PMI PMO Certified Professional',category:'pmo',recommendation:'spezialrolle',
 targetGroup:'Manager, Associate Partner (PMO-Fokus)',
 shortDescription:'Modernes PMO-Zertifikat: Value Delivery, strategisches Alignment, PMO of the Future.',
-costMin:1500,costMax:2000,costLabel:'1.500–2.000 €',costDetail:'ca. 1.500–2.000 € inkl. Vorbereitung',
+costMin:1500,costMax:2000,
 effortHours:50,effortLabel:'Moderat, 3–4 Wochen',effortWeeks:'3–4 Wochen',relevance:3,
-provider:'PMI',bookingUrl:'https://www.pmi.org/certifications/pmo-cp',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (Prüfung + Webinar)', priceEur: '~750 €', priceUsd: '655+160 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/pmo-cp'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'ATPs', url: 'https://www.pmi.org'}
+],
+
 benefits:['Beratungsprodukt für PMO-Aufbau und -Sanierung','C-Level Advisory Grundlage','Strategisches Alignment und Wertbeitrag','Zukunftsfähiger als bürokratische PMO-Frameworks'],
 suitable:['manager','associate_partner','partner'],focus:['pmo','governance'],environment:['konzern','dach']},
 
 {id:'prince2',name:'PRINCE2 Agile',fullName:'PRINCE2 / PRINCE2 Agile',category:'classic',recommendation:'empfohlen',
 targetGroup:'Senior Consultant, Manager',
 shortDescription:'Governance-Struktur + agile Ausführung für regulierte Umfelder.',
-costMin:1500,costMax:2500,costLabel:'1.500–2.500 €',costDetail:'Foundation + Practitioner Bundle ca. 1.500–2.500 €',
+costMin:1500,costMax:2500,
 effortHours:40,effortLabel:'3–5 Tage Training + Prüfung',effortWeeks:'1–2 Wochen',relevance:4,
-provider:'SERVIEW',bookingUrl:'https://www.serview.de',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '500–700 €', priceUsd: '', provider: 'PeopleCert', url: 'https://www.peoplecert.org'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'SERVIEW', url: 'https://www.serview.de'}
+],
+
 benefits:['Passend zu Konzern-, Public-Sector-, Pharma- und Finanzumfeldern','Klare Rollen, Phasen, Eskalationswege','Schnelle Integration in bestehende Kundenmethodiken','Hilfreich bei stark auditierbaren Projekten'],
 suitable:['senior_consultant','manager','associate_partner'],focus:['classic','governance'],environment:['konzern','public','dach','insurance']},
 
 {id:'safe',name:'SAFe',fullName:'SAFe Advanced Scrum Master',category:'agile',recommendation:'spezialrolle',
 targetGroup:'Senior Consultant, Manager (Enterprise-Kontext)',
 shortDescription:'Enterprise Agile – Skalierung über Teams, Release Trains und Portfolio.',
-costMin:950,costMax:1700,costLabel:'950–1.700 €',costDetail:'950–1.700 € inkl. Prüfung + 1 Jahr Mitgliedschaft',
+costMin:950,costMax:1700,
 effortHours:25,effortLabel:'2 Tage Training + Prüfung',effortWeeks:'1 Woche',relevance:3,
-provider:'KEGON / SERVIEW',bookingUrl:'https://kegonacademy.com',
+bookingOptions: [
+{type: 'course', label: 'Geführter Kurs (Pflicht)', priceEur: '950–1.700 €', priceUsd: '', provider: 'KEGON / SERVIEW', url: 'https://kegonacademy.com'}
+],
+
 benefits:['Anschlussfähigkeit an DAX- und Großkonzernumfelder','PI Planning, Release Trains, Lean Portfolio Management','Nützlich bei großen Transformationsprogrammen'],
 recertification:'Jährlich, ca. 295 USD/Jahr',
 suitable:['senior_consultant','manager'],focus:['agile','skalierung'],environment:['konzern','international']},
@@ -73,45 +100,64 @@ suitable:['senior_consultant','manager'],focus:['agile','skalierung'],environmen
 {id:'pmiacp',name:'PMI-ACP',fullName:'Agile Certified Practitioner',category:'agile',recommendation:'empfohlen',
 targetGroup:'Senior Consultant, Manager (agiler Fokus)',
 shortDescription:'Breites agiles Methodenverständnis: Kanban, Lean, XP, TDD.',
-costMin:435,costMax:495,costLabel:'410–470 € (435–495 USD)',costDetail:'435 USD (PMI-Mitglied) / 495 USD (Nicht-Mitglied)',
+costMin:1000,costMax:1500,
 effortHours:50,effortLabel:'Mittel',effortWeeks:'3–4 Wochen',relevance:3,
-provider:'PMI / ATPs',bookingUrl:'https://www.pmi.org/certifications/agile-acp',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '470 €', priceUsd: '495 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/agile-acp'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.000–1.500 €', priceUsd: '', provider: 'Diverse ATPs', url: 'https://www.pmi.org'}
+],
+
 benefits:['Breiteres agiles Methodenverständnis','Nützlich für Umfelder ohne eindeutiges Scrum-Setup','Gute Ergänzung für hybride und agile Senior-Profile'],
 suitable:['senior_consultant','manager'],focus:['agile'],environment:['international','it']},
 
 {id:'aipm',name:'APMG AIPM',fullName:'AI-Driven Project Manager',category:'ki',recommendation:'empfohlen',
 targetGroup:'Analyst bis Manager – breite Zielgruppe',
 shortDescription:'Quick Win: KI effizient im PM-Alltag nutzen – geringer Aufwand, hoher Impact.',
-costMin:400,costMax:700,costLabel:'380–660 € (400–700 USD)',costDetail:'400–700 USD (Self-Paced + Exam)',
+costMin:800,costMax:1200,
 effortHours:15,effortLabel:'1–2 Wochen',effortWeeks:'1–2 Wochen',relevance:4,
-provider:'APMG International',bookingUrl:'https://pmairevolution.com',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (Self-Paced)', priceEur: '380–660 €', priceUsd: '400–700 USD', provider: 'APMG International', url: 'https://pmairevolution.com'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '800–1.200 €', priceUsd: '', provider: 'ATOs', url: 'https://apmg-international.com'}
+],
+
 benefits:['Effizienzgewinn bei Statusberichten, Protokollen, Analysen','Verbesserte Risikoanalysen und Stakeholderkommunikation','Schnell anwendbar im Projektalltag','Geringer Aufwand und niedrige Einstiegshürde'],
 suitable:['analyst','consultant','senior_consultant','manager','expert'],focus:['ki'],environment:['international','konzern','dach','it']},
 
 {id:'p3o',name:'P3O',fullName:'Portfolio, Programme and Project Offices',category:'pmo',recommendation:'optional',
 targetGroup:'Manager, Associate Partner (PMO-Governance)',
 shortDescription:'Klassisches PMO-Governance-Framework für formale Umfelder.',
-costMin:1500,costMax:2000,costLabel:'1.500–2.000 €',costDetail:'Foundation + Practitioner ca. 1.500–2.000 €',
+costMin:1500,costMax:2000,
 effortHours:40,effortLabel:'Mittel',effortWeeks:'2–3 Wochen',relevance:3,
-provider:'SERVIEW / Axelos',bookingUrl:'https://www.serview.de',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '~500 €', priceUsd: '', provider: 'PeopleCert', url: 'https://www.peoplecert.org'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.500–2.000 €', priceUsd: '', provider: 'SERVIEW', url: 'https://www.serview.de'}
+],
+
 benefits:['Nützlich bei Behörden, Banken, stark hierarchischen Organisationen','Blaupause für Governance- und Assurance-Strukturen','Ergänzend zu PMI-PMOCP'],
 suitable:['manager','associate_partner'],focus:['pmo','governance'],environment:['public','konzern','insurance']},
 
 {id:'capm',name:'CAPM',fullName:'Certified Associate in Project Management',category:'classic',recommendation:'optional',
 targetGroup:'Analyst, Consultant',
 shortDescription:'Methodisches PM-Grundvokabular ohne umfangreiche Führungserfahrung.',
-costMin:250,costMax:350,costLabel:'230–330 € (250–350 USD)',costDetail:'250 USD (PMI-Mitglied) / 350 USD (Nicht-Mitglied)',
+costMin:800,costMax:1500,
 effortHours:30,effortLabel:'Moderat',effortWeeks:'2–4 Wochen',relevance:2,
-provider:'PMI / KAYENTA',bookingUrl:'https://www.kayenta.de',
+bookingOptions: [
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '280 €', priceUsd: '300 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/certified-associate-capm'},
+{type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '800–1.500 €', priceUsd: '', provider: 'KAYENTA / ATPs', url: 'https://www.kayenta.de'}
+],
+
 benefits:['Niedrigschwelliger Einstieg in PM-Methodik','Gute Vorbereitung auf späteren PMP','International anerkannt'],
 suitable:['analyst','consultant'],focus:['classic'],environment:['international','konzern']},
 
 {id:'fraunhofer',name:'Fraunhofer KI-Manager',fullName:'Fraunhofer Zertifizierter KI-Manager',category:'ki',recommendation:'spezialrolle',
 targetGroup:'Associate Partner, Partner, Senior Expert',
 shortDescription:'Reputationsstark im deutschen Markt – für strategische KI-Transformation.',
-costMin:3950,costMax:3950,costLabel:'3.950 €',costDetail:'3.950 €, 3 Wochen Online-Format',
+costMin:3950,costMax:3950,
 effortHours:80,effortLabel:'Hoch, 3 Wochen',effortWeeks:'3 Wochen',relevance:4,
-provider:'Fraunhofer IAIS / FIT',bookingUrl:'https://www.academy.fraunhofer.de/',
+bookingOptions: [
+{type: 'course', label: 'Geführter Kurs (3 Wochen)', priceEur: '3.950 €', priceUsd: '', provider: 'Fraunhofer IAIS', url: 'https://www.academy.fraunhofer.de/'}
+],
+
 benefits:['Hohe Glaubwürdigkeit im deutschen Markt','Vertrauensanker im C-Level-Umfeld','Geeignet für unternehmensweite KI-Transformation','Strategische KI-Beratung'],
 suitable:['associate_partner','partner','senior_expert'],focus:['ki','strategie'],environment:['dach']}
 ];
@@ -152,25 +198,25 @@ target:'Analyst, Consultant – Berufseinsteiger:innen',
 goal:'Solides PM-Handwerkszeug, agiles Grundverständnis, effiziente Nutzung von KI.',
 steps:[{certId:'capm',benefit:'Methodisches Grundvokabular'},{certId:'psm1',benefit:'Agile Anschlussfähigkeit'},{certId:'aipm',benefit:'KI-Effizienz im PM-Alltag'}]},
 
+{id:'agile-track',title:'Consultant → Senior Consultant (Agile)',badge:'AGILE DELIVERY',badgeColor:'#D4782F',
+target:'Consultant, Senior Consultant – Agile IT- & Produktprojekte',
+goal:'Agile Teams, Product Ownership und schnelle Delivery.',
+steps:[{certId:'psm1',benefit:'Scrum-Grundverständnis'},{certId:'psm1',benefit:'Product- & Value-Fokus (PSPO I)',altName:'PSPO I'},{certId:'pmiacp',benefit:'Methodenbreite / Skalierung'}]},
+
 {id:'delivery',title:'Senior Consultant → Manager (Delivery)',badge:'DELIVERY',badgeColor:'#D4782F',
 target:'Senior Consultant, Manager – IT- & Transformationsprojekte',
 goal:'Projektführung, hybride Steuerung und Enterprise Transformation.',
 steps:[{certId:'pmp',benefit:'Strategische PM-Seniorität'},{certId:'prince2',benefit:'Governance + agile Ausführung'},{certId:'safe',benefit:'Skalierung / Methodenbreite'}]},
-
-{id:'governance',title:'Manager → Associate Partner (Governance)',badge:'GOVERNANCE',badgeColor:'#2E8B57',
-target:'Manager, Associate Partner – PMO- & Governance-Rollen',
-goal:'C-Level Advisory, PMO-Aufbau, Governance und Value Delivery.',
-steps:[{certId:'ipma',benefit:'Führungskompetenz im DACH-Markt'},{certId:'pmocp',benefit:'Modernes PMO of the Future'},{certId:'p3o',benefit:'Klassische Governance-Umfelder'}]},
 
 {id:'ki-track',title:'Expert → Senior Expert (KI-Track)',badge:'KI & DATA',badgeColor:'#8B3A8B',
 target:'Expert, Senior Expert – KI- & Data-Projektleitung',
 goal:'Steuerung komplexer KI- und Data-Science-Projekte.',
 steps:[{certId:'pmp',benefit:'Solide PM-Governance'},{certId:'cpmai',benefit:'KI-Projekte methodisch steuern'},{certId:'fraunhofer',benefit:'Strategische KI-Beratung'}]},
 
-{id:'agile-track',title:'Consultant → Senior Consultant (Agile)',badge:'AGILE DELIVERY',badgeColor:'#D4782F',
-target:'Consultant, Senior Consultant – Agile IT- & Produktprojekte',
-goal:'Agile Teams, Product Ownership und schnelle Delivery.',
-steps:[{certId:'psm1',benefit:'Scrum-Grundverständnis'},{certId:'psm1',benefit:'Product- & Value-Fokus (PSPO I)',altName:'PSPO I'},{certId:'pmiacp',benefit:'Methodenbreite / Skalierung'}]}
+{id:'governance',title:'Manager → Associate Partner (Governance)',badge:'GOVERNANCE',badgeColor:'#2E8B57',
+target:'Manager, Associate Partner – PMO- & Governance-Rollen',
+goal:'C-Level Advisory, PMO-Aufbau, Governance und Value Delivery.',
+steps:[{certId:'ipma',benefit:'Führungskompetenz im DACH-Markt'},{certId:'pmocp',benefit:'Modernes PMO of the Future'},{certId:'p3o',benefit:'Klassische Governance-Umfelder'}]}
 ];
 
 const PROVIDERS=[

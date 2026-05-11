@@ -73,9 +73,15 @@ const REC_ORDER=['musthave','empfohlen','strategisch','spezialrolle','optional']
 function renderCertCard(c){
 const cat=CATEGORIES[c.category];const rec=RECOMMENDATION_LEVELS[c.recommendation];
 const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
-// Find matching provider info
-const prov=PROVIDERS.find(p=>p.name===c.provider||c.provider.includes(p.name));
-const provNote=prov?prov.note:'';
+const costLabel=c.bookingOptions.length>1?'ab '+c.bookingOptions[0].priceEur:c.bookingOptions[0].priceEur;
+const bookingOptsHtml=c.bookingOptions.map(opt=>`
+<div style="margin-top:12px; padding:12px; background:var(--bg); border-radius:var(--radius-md); border:1px solid var(--border)">
+<div style="display:flex; justify-content:space-between; align-items:flex-start">
+<div><strong style="font-size:13px">${opt.label}</strong><br><span style="font-size:11px; color:var(--text-muted)">Anbieter: ${opt.provider}</span></div>
+<div style="text-align:right"><strong style="font-size:13px">${opt.priceEur}</strong><br>${opt.priceUsd?`<span style="font-size:10px; color:var(--text-muted)">${opt.priceUsd}</span>`:''}</div>
+</div>
+${opt.url?`<a href="${opt.url}" target="_blank" rel="noopener" class="cert-book-btn" style="margin-top:10px; padding:6px 12px; font-size:12px" onclick="event.stopPropagation()">→ ${opt.type==='self'?'Prüfung buchen':'Kurs buchen'}</a>`:''}
+</div>`).join('');
 return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommendation}" id="card-${c.id}" onclick="toggleCert('${c.id}')">
 <div class="cert-card-top" style="background:${cat.color}"></div>
 <div class="cert-card-body">
@@ -83,7 +89,7 @@ return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommenda
 <div class="cert-sub">${cat.emoji} ${c.fullName}</div>
 <div class="cert-desc">${c.shortDescription}</div>
 <div class="cert-metrics">
-<div><div class="cert-metric-label">Kosten</div><div class="cert-metric-value">${c.costLabel}</div></div>
+<div><div class="cert-metric-label">Kosten</div><div class="cert-metric-value">${costLabel}</div></div>
 <div><div class="cert-metric-label">Aufwand</div><div class="cert-metric-value">${c.effortWeeks}</div></div>
 <div><div class="cert-metric-label">Relevanz</div><div class="cert-metric-value cert-stars">${stars}</div></div>
 </div></div>
@@ -92,13 +98,11 @@ return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommenda
 <ul>${(c.benefits||[]).map(b=>`<li>${b}</li>`).join('')}</ul>
 <div class="cert-detail-grid">
 <div class="cert-detail-item"><label>Zielgruppe</label><p>${c.targetGroup}</p></div>
-<div class="cert-detail-item"><label>Anbieter</label><p>${c.provider}${provNote?' · '+provNote:''}</p></div>
 ${c.recertification?`<div class="cert-detail-item"><label>Rezertifizierung</label><p>${c.recertification}</p></div>`:''}
 ${c.examDetails?`<div class="cert-detail-item"><label>Prüfung</label><p>${c.examDetails}</p></div>`:''}
 </div>
-${c.costDetail?`<div style="margin-top:12px"><label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600">Kostendetail</label><p style="font-size:13px;margin-top:2px">${c.costDetail}</p></div>`:''}
 ${c.special2026?`<div class="cert-special"><p>⚡ ${c.special2026}</p></div>`:''}
-${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="cert-book-btn" onclick="event.stopPropagation()">→ Jetzt buchen</a>`:''}
+<div style="margin-top:16px"><label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;font-weight:600">Buchungsoptionen</label>${bookingOptsHtml}</div>
 </div></div>`;
 }
 function renderCatalog(){
@@ -201,18 +205,18 @@ body.innerHTML=data.map(c=>{
 const cat=CATEGORIES[c.category];const rec=RECOMMENDATION_LEVELS[c.recommendation];
 const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
 const effortDisplay=`${c.effortHours}h (${c.effortWeeks})`;
-// Integrated provider info
-const prov=PROVIDERS.find(p=>p.name===c.provider||c.provider.includes(p.name));
-const provInfo=prov?`<strong>${c.provider}</strong><br><span style="font-size:10px;color:var(--text-muted)">${prov.format}</span>`:`<strong>${c.provider}</strong>`;
+const costHtml=c.bookingOptions.map(opt=>`<div style="margin-bottom:8px"><strong>${opt.priceEur}</strong> ${opt.priceUsd?`<span style="font-size:10px;color:var(--text-muted)">(${opt.priceUsd})</span>`:''}<br><span style="font-size:10px;color:var(--text-muted)">${opt.label}</span></div>`).join('');
+const provHtml=c.bookingOptions.map(opt=>`<div style="margin-bottom:8px;font-size:12px"><strong>${opt.provider}</strong></div>`).join('');
+const bookHtml=c.bookingOptions.map(opt=>opt.url?`<div style="margin-bottom:8px"><a href="${opt.url}" target="_blank" rel="noopener" class="table-link" style="font-size:11px; padding:4px 8px; display:inline-block">${opt.type==='self'?'Prüfung →':'Kurs →'}</a></div>`:'-').join('');
 return `<tr>
 <td><strong>${c.name}</strong><br><span style="font-size:11px;color:var(--text-muted)">${c.fullName}</span></td>
 <td><span class="cat-dot" style="background:${cat.color}"></span>${cat.label}</td>
 <td><span class="cert-badge" style="background:${rec.color};color:#fff;font-size:10px">${rec.label}</span></td>
-<td>${c.costLabel}</td>
+<td>${costHtml}</td>
 <td>${effortDisplay}</td>
 <td style="color:var(--red)">${stars}</td>
-<td>${provInfo}</td>
-<td>${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="table-link">Buchen →</a>`:'-'}</td>
+<td>${provHtml}</td>
+<td>${bookHtml}</td>
 </tr>`}).join('');
 }
 
@@ -237,7 +241,7 @@ const labelConfig={
 const datasets=Object.values(CATEGORIES).map(cat=>{
 const certs=CERTIFICATIONS.filter(c=>c.category===cat.id);
 return{label:cat.label,backgroundColor:cat.color+'66',borderColor:cat.color,borderWidth:2,
-data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*3+6,certName:c.name,certCost:c.costLabel,certEffort:c.effortWeeks})),
+data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*3+6,certName:c.name,certCost:c.bookingOptions.length>1?'ab '+c.bookingOptions[0].priceEur:c.bookingOptions[0].priceEur,certEffort:c.effortWeeks})),
 datalabels:{display:true,color:'#111',backgroundColor:'#ffffffcc',borderRadius:4,padding:{top:3,bottom:3,left:5,right:5},
 font:{weight:'bold',size:10,family:'"Segoe UI", sans-serif'},
 formatter:(_,ctx2)=>ctx2.dataset.data[ctx2.dataIndex].certName,
@@ -266,8 +270,7 @@ const container=document.getElementById('paths-container');
 container.innerHTML=DEVELOPMENT_PATHS.map(p=>{
 return `<div class="path-card" id="path-${p.id}">
 <div class="path-header" onclick="togglePath('${p.id}')">
-<span class="path-badge" style="background:${p.badgeColor}">${p.badge}</span>
-<div style="flex:1"><h3>${p.title}</h3><div class="path-meta">${p.target}</div></div>
+<div class="path-info"><h3>${p.title}</h3><div class="path-meta">${p.target}</div></div>
 <span class="path-chevron">▼</span>
 </div>
 <div class="path-body">

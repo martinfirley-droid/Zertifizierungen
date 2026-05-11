@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 initFinder();renderCatalog();renderTable();renderChart();renderPaths();renderProviders();initNav();initFadeIn();
 });
 
-/* ─── NAV ─── */
+/* NAV */
 function initNav(){
 const links=document.querySelectorAll('.nav-link');
 const sections=document.querySelectorAll('section');
@@ -20,28 +20,40 @@ const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targ
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 }
 
-/* ─── FINDER ─── */
+/* FINDER (#3 all combos 3 results, #5 back button, #10 breadcrumb) */
 let finderState={step:0,career:null,market:null,role:null};
 function initFinder(){finderState={step:0,career:null,market:null,role:null};renderFinderStep()}
+function goToStep(n){if(n<finderState.step){finderState.step=n;renderFinderStep()}}
 function renderFinderStep(){
 const dots=document.getElementById('finder-dots');
 const content=document.getElementById('finder-content');
 const results=document.getElementById('finder-results');
 results.innerHTML='';
-dots.innerHTML=[1,2,3].map((n,i)=>`<div class="finder-dot ${i<finderState.step?'done':i===finderState.step?'active':''}">${i<finderState.step?'✓':n}</div>`).join('');
-if(finderState.step===0)renderCareerStep(content);
-else if(finderState.step===1)renderMarketStep(content);
-else if(finderState.step===2)renderRoleStep(content);
+dots.innerHTML=[1,2,3].map((n,i)=>`<div class="finder-dot ${i<finderState.step?'done':i===finderState.step?'active':''}" ${i<finderState.step?`onclick="goToStep(${i})"`:''} title="${i<finderState.step?'Klick zum Ändern':''}">${i<finderState.step?'✓':n}</div>`).join('');
+// Breadcrumb (#10)
+let bc='';
+const clObj=CAREER_LEVELS.find(c=>c.id===finderState.career);
+const mkObj=MARKETS.find(m=>m.id===finderState.market);
+if(finderState.step>0){
+bc='<div class="finder-breadcrumb">';
+if(clObj)bc+=`<span>${clObj.label}</span>`;
+if(mkObj)bc+=' → <span>'+mkObj.label+'</span>';
+bc+='</div>';
+}
+if(finderState.step===0){content.innerHTML=bc+renderCareerStep()}
+else if(finderState.step===1){content.innerHTML=bc+renderBackBtn()+renderMarketStep()}
+else if(finderState.step===2){content.innerHTML=bc+renderBackBtn()+renderRoleStep()}
 else{content.innerHTML='';showFinderResults(results)}
 }
-function renderCareerStep(el){
-el.innerHTML=`<div class="finder-step"><h3>Deine aktuelle Karrierestufe bei acterience?</h3><p>Wähle dein Level – die Empfehlung berücksichtigt deine Seniorität.</p><div class="finder-options">${CAREER_LEVELS.map(c=>`<div class="finder-option" onclick="selectCareer('${c.id}')"><div><div class="fo-label">${c.label}</div></div></div>`).join('')}</div></div>`;
+function renderBackBtn(){return `<button class="finder-back" onclick="goToStep(${finderState.step-1})">← Zurück</button>`}
+function renderCareerStep(){
+return `<div class="finder-step"><h3>Deine aktuelle Karrierestufe bei acterience?</h3><p>Wähle dein Level – die Empfehlung berücksichtigt deine Seniorität.</p><div class="finder-options">${CAREER_LEVELS.map(c=>`<div class="finder-option" onclick="selectCareer('${c.id}')"><div><div class="fo-label">${c.label}</div></div></div>`).join('')}</div></div>`;
 }
-function renderMarketStep(el){
-el.innerHTML=`<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen an PM-Zertifizierungen.</p><div class="finder-options">${MARKETS.map(m=>`<div class="finder-option" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
+function renderMarketStep(){
+return `<div class="finder-step"><h3>In welchem Market arbeitest du vorrangig?</h3><p>Verschiedene Branchen haben unterschiedliche Anforderungen an PM-Zertifizierungen.</p><div class="finder-options">${MARKETS.map(m=>`<div class="finder-option" onclick="selectMarket('${m.id}')"><div class="fo-icon">${m.icon}</div><div><div class="fo-label">${m.label}</div></div></div>`).join('')}</div></div>`;
 }
-function renderRoleStep(el){
-el.innerHTML=`<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So können wir die passendste Zertifizierung für dein Aufgabenprofil empfehlen.</p><div class="finder-options">${PM_ROLES.map(r=>`<div class="finder-option" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
+function renderRoleStep(){
+return `<div class="finder-step"><h3>Welche PM-Rolle beschreibt dich am besten?</h3><p>So können wir die passendste Zertifizierung für dein Aufgabenprofil empfehlen.</p><div class="finder-options">${PM_ROLES.map(r=>`<div class="finder-option" onclick="selectRole('${r.id}')"><div class="fo-icon">${r.icon}</div><div><div class="fo-label">${r.label}</div></div></div>`).join('')}</div></div>`;
 }
 function selectCareer(id){finderState.career=id;finderState.step=1;renderFinderStep()}
 function selectMarket(id){finderState.market=id;finderState.step=2;renderFinderStep()}
@@ -53,10 +65,10 @@ const cl=CAREER_LEVELS.find(c=>c.id===finderState.career);
 const mk=MARKETS.find(m=>m.id===finderState.market);
 const rl=PM_ROLES.find(r=>r.id===finderState.role);
 const pathMatch=DEVELOPMENT_PATHS.find(p=>{const certSet=p.steps.map(s=>s.certId);return certIds.some(id=>certSet.includes(id))});
-el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>{const cat=CATEGORIES[c.category];return `<div class="result-card"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta"><span>💰 ${c.costLabel}</span><span>⏱ ${c.effortWeeks}</span><span>📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div class="result-path"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p>${pathMatch.goal}</p></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
+el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>{return `<div class="result-card"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta"><span>💰 ${c.costLabel}</span><span>⏱ ${c.effortWeeks}</span><span>📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div class="result-path"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p>${pathMatch.goal}</p></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
 }
 
-/* ─── CATALOG ─── */
+/* CATALOG (#7 filter counter, #11 reset all) */
 let activeFilters={category:null,recommendation:null};
 function renderCatalog(){
 const grid=document.getElementById('cert-grid');
@@ -94,12 +106,25 @@ const type=btn.dataset.filterType;const val=btn.dataset.cat||btn.dataset.rec;
 if(activeFilters[type]===val){activeFilters[type]=null;btn.classList.remove('active')}
 else{document.querySelectorAll(`.filter-btn[data-filter-type="${type}"]`).forEach(b=>b.classList.remove('active'));activeFilters[type]=val;btn.classList.add('active')}
 applyFilters()})});
+applyFilters();
 }
+function resetAllFilters(){activeFilters={category:null,recommendation:null};document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));applyFilters()}
 function applyFilters(){
+let shown=0,total=CERTIFICATIONS.length;
 document.querySelectorAll('.cert-card').forEach(card=>{
 const cat=card.dataset.cat;const rec=card.dataset.rec;
 const show=(!activeFilters.category||cat===activeFilters.category)&&(!activeFilters.recommendation||rec===activeFilters.recommendation);
-card.style.display=show?'':'none'});
+card.style.display=show?'':'none';if(show)shown++});
+// Filter summary (#7 + #15)
+let existing=document.getElementById('filter-summary');
+if(activeFilters.category||activeFilters.recommendation){
+const catLabel=activeFilters.category?CATEGORIES[activeFilters.category].label:'';
+const recLabel=activeFilters.recommendation?RECOMMENDATION_LEVELS[activeFilters.recommendation].label:'';
+const text=[catLabel,recLabel].filter(Boolean).join(' + ');
+if(!existing){existing=document.createElement('div');existing.id='filter-summary';existing.className='filter-summary';
+document.getElementById('cert-grid').before(existing)}
+existing.innerHTML=`Zeige: <strong>${text}</strong> (${shown} von ${total}) <button class="filter-reset-all" onclick="resetAllFilters()">Alle zurücksetzen</button>`;
+}else if(existing){existing.remove()}
 }
 function toggleCert(id){
 const el=document.getElementById('detail-'+id);
@@ -108,7 +133,7 @@ if(el.classList.contains('visible')){el.classList.remove('visible');trigger.text
 else{el.classList.add('visible');trigger.textContent='‣ Weniger anzeigen'}
 }
 
-/* ─── TABLE ─── */
+/* TABLE (#6 consistent effort format) */
 let tableSortCol='relevance',tableSortAsc=false;
 function renderTable(){
 populateTableFilters();renderTableBody();
@@ -152,42 +177,65 @@ const body=document.getElementById('cert-table-body');
 body.innerHTML=data.map(c=>{
 const cat=CATEGORIES[c.category];const rec=RECOMMENDATION_LEVELS[c.recommendation];
 const stars='★'.repeat(c.relevance)+'☆'.repeat(5-c.relevance);
+// #6: Show hours + weeks for consistency
+const effortDisplay=`${c.effortHours}h (${c.effortWeeks})`;
 return `<tr>
 <td><strong>${c.name}</strong><br><span style="font-size:11px;color:var(--text-muted)">${c.fullName}</span></td>
 <td><span class="cat-dot" style="background:${cat.color}"></span>${cat.label}</td>
 <td><span class="cert-badge" style="background:${rec.color};color:#fff;font-size:10px">${rec.label}</span></td>
 <td>${c.costLabel}</td>
-<td>${c.effortWeeks}</td>
+<td>${effortDisplay}</td>
 <td style="color:var(--red)">${stars}</td>
 <td>${c.provider}</td>
 <td>${c.bookingUrl?`<a href="${c.bookingUrl}" target="_blank" rel="noopener" class="table-link">Buchen →</a>`:'-'}</td>
 </tr>`}).join('');
 }
 
-/* ─── CHART ─── */
+/* CHART (#1 label overlap fix, #2 clamp labels) */
 function renderChart(){
 const ctx=document.getElementById('bubbleChart');
 if(!ctx)return;
+// Custom label positions to avoid overlap
+const labelConfig={
+'PMP':{anchor:'start',align:'left',offset:6},
+'PSM I / PSPO I':{anchor:'end',align:'top',offset:8},
+'CAPM':{anchor:'end',align:'right',offset:6},
+'APMG AIPM':{anchor:'start',align:'bottom',offset:8},
+'SAFe':{anchor:'end',align:'right',offset:6},
+'PMI-ACP':{anchor:'start',align:'left',offset:6},
+'PMI-CPMAI':{anchor:'start',align:'left',offset:6},
+'PMI-PMOCP':{anchor:'end',align:'top',offset:6},
+'PRINCE2 Agile':{anchor:'end',align:'right',offset:6},
+'P3O':{anchor:'start',align:'bottom',offset:8},
+'IPMA Level C/B':{anchor:'start',align:'left',offset:6},
+'Fraunhofer KI-Manager':{anchor:'start',align:'left',offset:6}
+};
 const datasets=Object.values(CATEGORIES).map(cat=>{
 const certs=CERTIFICATIONS.filter(c=>c.category===cat.id);
 return{label:cat.label,backgroundColor:cat.color+'44',borderColor:cat.color,borderWidth:2,
-data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*6+4,certName:c.name,certCost:c.costLabel,certEffort:c.effortWeeks})),
-datalabels:{display:true,color:cat.color,font:{weight:'bold',size:11},anchor:'end',align:'top',offset:4,
-formatter:(_,ctx2)=>ctx2.dataset.data[ctx2.dataIndex].certName}
+data:certs.map(c=>({x:c.costMin,y:c.effortHours,r:c.relevance*5+4,certName:c.name,certCost:c.costLabel,certEffort:c.effortWeeks})),
+datalabels:{display:true,color:cat.color,clamp:true,
+font:{weight:'bold',size:10},
+formatter:(_,ctx2)=>ctx2.dataset.data[ctx2.dataIndex].certName,
+anchor:function(ctx2){const name=ctx2.dataset.data[ctx2.dataIndex].certName;return labelConfig[name]?.anchor||'end'},
+align:function(ctx2){const name=ctx2.dataset.data[ctx2.dataIndex].certName;return labelConfig[name]?.align||'top'},
+offset:function(ctx2){const name=ctx2.dataset.data[ctx2.dataIndex].certName;return labelConfig[name]?.offset||4}
+}
 }});
 const legend=document.getElementById('chart-legend');
 legend.innerHTML=Object.values(CATEGORIES).map(c=>`<div class="chart-legend-item"><div class="chart-legend-dot" style="background:${c.color}"></div>${c.label}</div>`).join('');
 new Chart(ctx,{type:'bubble',data:{datasets},
 plugins:[ChartDataLabels],
 options:{responsive:true,maintainAspectRatio:true,aspectRatio:1.6,
+layout:{padding:{top:30,right:40,bottom:10,left:10}},
 plugins:{legend:{display:false},datalabels:{},
 tooltip:{callbacks:{title:items=>items[0]?.raw?.certName||'',
-label:item=>[`Kosten: ${item.raw.certCost}`,`Aufwand: ${item.raw.certEffort}`,`Relevanz: ${Math.round((item.raw.r-4)/6)}/5`]}}},
-scales:{x:{title:{display:true,text:'Kosten (€)',font:{weight:'bold'}},ticks:{callback:v=>v>=1000?v/1000+'k €':v+' €'},grid:{color:'#E2E2E2'}},
-y:{title:{display:true,text:'Aufwand (Stunden)',font:{weight:'bold'}},grid:{color:'#E2E2E2'}}}}});
+label:item=>[`Kosten: ${item.raw.certCost}`,`Aufwand: ${item.raw.certEffort}`,`Relevanz: ${Math.round((item.raw.r-4)/5)}/5`]}}},
+scales:{x:{title:{display:true,text:'Kosten (€)',font:{weight:'bold'}},ticks:{callback:v=>v>=1000?v/1000+'k €':v+' €'},grid:{color:'#E2E2E2'},min:0},
+y:{title:{display:true,text:'Aufwand (Stunden)',font:{weight:'bold'}},grid:{color:'#E2E2E2'},min:0,max:140}}}});
 }
 
-/* ─── PATHS ─── */
+/* PATHS */
 function renderPaths(){
 const container=document.getElementById('paths-container');
 container.innerHTML=DEVELOPMENT_PATHS.map(p=>{
@@ -213,16 +261,22 @@ return `${i>0?'<div class="path-arrow">→</div>':''}
 function togglePath(id){document.getElementById('path-'+id).classList.toggle('open')}
 function scrollToCert(id){const el=document.getElementById('card-'+id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px var(--red)';setTimeout(()=>el.style.boxShadow='',2000)}}
 
-/* ─── PROVIDERS ─── */
+/* PROVIDERS (#12 recommendation badge) */
 function renderProviders(){
 const grid=document.getElementById('providers-grid');
-grid.innerHTML=PROVIDERS.map(p=>`<div class="provider-card">
+grid.innerHTML=PROVIDERS.map(p=>{
+let badgeClass='empfohlen';
+if(p.recommendation.includes('sehr'))badgeClass='sehr';
+if(p.recommendation.includes('notwendig'))badgeClass='notwendig';
+const badgeLabel=p.recommendation.includes('sehr')?'⭐ Sehr empfohlen':p.recommendation.includes('notwendig')?'⚡ Notwendig':'👍 Empfohlen';
+return `<div class="provider-card">
 <h3>${p.name}</h3>
 <div class="prov-focus">${p.focus}</div>
+<span class="prov-rec ${badgeClass}">${badgeLabel}</span>
 <div class="prov-meta">
 <span>📍 ${p.format}</span>
 <span>📌 ${p.note}</span>
 </div>
 <a href="${p.url}" target="_blank" rel="noopener" class="prov-link">→ Website & Buchung</a>
-</div>`).join('');
+</div>`}).join('');
 }

@@ -113,7 +113,7 @@ const cat=CATEGORIES[catId];
 const certs=sorted.filter(c=>c.category===catId);
 if(!certs.length)return;
 html+=`<div class="cert-group" data-group-cat="${catId}">
-<div class="cert-group-header"><div class="cg-dot" style="background:${cat.color}"></div><h3>${cat.emoji} ${cat.label}</h3><span class="cg-count">${certs.length} Zertifizierungen</span></div>
+<div class="cert-group-header"><div class="cg-dot" style="background:${cat.color}"></div><h3>${cat.label}</h3><span class="cg-count">${certs.length} Zertifizierungen</span></div>
 <div class="cert-grid">${certs.map(c=>renderCertCard(c)).join('')}</div></div>`;
 });
 grid.innerHTML=html;

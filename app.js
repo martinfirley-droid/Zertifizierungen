@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
-initFinder();renderCatalog();renderTable();renderChart();renderPaths();initNav();initFadeIn();
+initFinder();renderCatalog();renderTable();renderChart();renderPaths();initNav();initFadeIn();initTooltip();
 });
 
 /* NAV */
@@ -18,6 +18,21 @@ document.querySelector(l.getAttribute('href'))?.scrollIntoView({behavior:'smooth
 function initFadeIn(){
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+}
+function initTooltip(){
+const t=document.getElementById('relevance-tooltip');if(!t)return;
+document.addEventListener('mouseover',e=>{
+const tr=e.target.closest('.tooltip-trigger');
+if(tr){
+const r=tr.getBoundingClientRect();
+let top=r.top+window.scrollY-t.offsetHeight-10;
+let left=r.left+window.scrollX+(r.width/2)-(t.offsetWidth/2);
+if(top<window.scrollY)top=r.bottom+window.scrollY+10;
+if(left<10)left=10;
+if(left+t.offsetWidth>window.innerWidth-10)left=window.innerWidth-t.offsetWidth-10;
+t.style.top=top+'px';t.style.left=left+'px';t.classList.add('visible');
+}else{t.classList.remove('visible');}
+});
 }
 
 /* FINDER */
@@ -67,7 +82,7 @@ const pathMap = {'analyst':'einstieg', 'consultant':'agile-track', 'senior_consu
 const pathMatch=DEVELOPMENT_PATHS.find(p=>p.id===pathMap[finderState.career]);
 el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>{
 const costHtml = c.bookingOptions ? c.bookingOptions.map(opt => `<span title="${opt.label}">${opt.type==='self'?'📝 Nur Prüfung:':'👨‍🏫 Inkl. Kurs:'} ${opt.priceEur}</span>`).join(' <span style="opacity:0.5; margin:0 4px">|</span> ') : `<span>💰 ${c.costLabel}</span>`;
-return `<div class="result-card" onclick="event.preventDefault(); scrollToCert('${c.id}'); const detail=document.getElementById('detail-${c.id}'); if(detail) detail.style.display='block';" style="display:flex; cursor:pointer" title="Zu den Details springen"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta" style="margin-top:8px">${costHtml} <span style="opacity:0.5; margin:0 4px">|</span> <span>⏱ ${c.effortWeeks}</span> <span style="opacity:0.5; margin:0 4px">|</span> <span>📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div onclick="event.preventDefault(); document.getElementById('path-${pathMatch.id}').classList.add('open'); document.getElementById('path-${pathMatch.id}').scrollIntoView({behavior:'smooth',block:'center'});" class="result-path" style="display:block; cursor:pointer;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--border)'"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p style="color:var(--text-secondary)">${pathMatch.goal}</p><div style="margin-top:8px; font-size:12px; color:var(--red); font-weight:600">Zum Pfad →</div></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
+return `<div class="result-card" onclick="event.preventDefault(); scrollToCert('${c.id}'); const detail=document.getElementById('detail-${c.id}'); if(detail) detail.style.display='block';" style="display:flex; cursor:pointer" title="Zu den Details springen"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta" style="margin-top:8px">${costHtml} <span style="opacity:0.5; margin:0 4px">|</span> <span>⏱ ${c.effortWeeks}</span> <span style="opacity:0.5; margin:0 4px">|</span> <span class="tooltip-trigger">📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div onclick="event.preventDefault(); document.getElementById('path-${pathMatch.id}').classList.add('open'); document.getElementById('path-${pathMatch.id}').scrollIntoView({behavior:'smooth',block:'center'});" class="result-path" style="display:block; cursor:pointer;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--border)'"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p style="color:var(--text-secondary)">${pathMatch.goal}</p><div style="margin-top:8px; font-size:12px; color:var(--red); font-weight:600">Zum Pfad →</div></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
 }
 
 /* CATALOG – grouped by category */
@@ -94,7 +109,7 @@ return `<div class="cert-card" data-cat="${c.category}" data-rec="${c.recommenda
 <div class="cert-metrics">
 <div><div class="cert-metric-label">Kosten</div><div class="cert-metric-value">${costLabel}</div></div>
 <div><div class="cert-metric-label">Aufwand</div><div class="cert-metric-value">${c.effortWeeks}</div></div>
-<div><div class="cert-metric-label">Relevanz</div><div class="cert-metric-value cert-stars">${stars}</div></div>
+<div><div class="cert-metric-label tooltip-trigger">Relevanz</div><div class="cert-metric-value cert-stars">${stars}</div></div>
 </div></div>
 <div class="cert-detail" id="detail-${c.id}">
 <h4>Strategischer Nutzen für acterience</h4>
@@ -217,7 +232,7 @@ return `<tr>
 <td><span class="cert-badge" style="background:${rec.color};color:#fff;font-size:10px">${rec.label}</span></td>
 <td>${costHtml}</td>
 <td>${effortDisplay}</td>
-<td style="color:var(--red)">${stars}</td>
+<td style="color:var(--red)" class="tooltip-trigger">${stars}</td>
 <td>${provHtml}</td>
 <td>${bookHtml}</td>
 </tr>`}).join('');
@@ -273,11 +288,10 @@ const container=document.getElementById('paths-container');
 container.innerHTML=DEVELOPMENT_PATHS.map(p=>{
 return `<div class="path-card" id="path-${p.id}">
 <div class="path-header" onclick="togglePath('${p.id}')">
-<div class="path-info"><h3>${p.title}</h3><div class="path-meta">${p.target}</div></div>
+<div class="path-info"><h3>${p.title}</h3></div>
 <span class="path-chevron">▼</span>
 </div>
 <div class="path-body">
-<div class="path-goal">🎯 ${p.goal}</div>
 <div class="path-timeline">${p.steps.map((s,i)=>{
 const cert=CERTIFICATIONS.find(c=>c.id===s.certId);
 const name=s.altName||cert?.name||s.certId;

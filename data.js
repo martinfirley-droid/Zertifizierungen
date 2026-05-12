@@ -36,7 +36,7 @@ shortDescription:'Starkes Differenzierungsmerkmal für professionelle KI-Projekt
 costMin:1500,costMax:2500,
 effortHours:70,effortLabel:'5–8 Wochen',effortWeeks:'5–8 Wochen',relevance:5,
 bookingOptions: [
-{type: 'self', label: 'Selbststudium (inkl. E-Learning)', priceEur: '850 €', priceUsd: '899 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/managing-ai-cpmai'},
+{type: 'self', label: 'Selbststudium (inkl. E-Learning)', priceEur: '850 €', priceUsd: '899 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/certification-resources/pmi-cpmai'},
 {type: 'course', label: 'Geführter Kurs (Live Bootcamp)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'Diverse ATPs', url: 'https://www.pmi.org'}
 ],
 
@@ -64,7 +64,7 @@ shortDescription:'Modernes PMO-Zertifikat: Value Delivery, strategisches Alignme
 costMin:1500,costMax:2000,
 effortHours:50,effortLabel:'Moderat, 3–4 Wochen',effortWeeks:'3–4 Wochen',relevance:3,
 bookingOptions: [
-{type: 'self', label: 'Selbststudium (Prüfung + Webinar)', priceEur: '~750 €', priceUsd: '655+160 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/pmo-cp'},
+{type: 'self', label: 'Selbststudium (Prüfung + Webinar)', priceEur: '~750 €', priceUsd: '655+160 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/project-management-office-certified-professional-pmi-pmocp'},
 {type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '1.500–2.500 €', priceUsd: '', provider: 'ATPs', url: 'https://www.pmi.org'}
 ],
 
@@ -142,7 +142,7 @@ shortDescription:'Methodisches PM-Grundvokabular ohne umfangreiche Führungserfa
 costMin:800,costMax:1500,
 effortHours:30,effortLabel:'Moderat',effortWeeks:'2–4 Wochen',relevance:2,
 bookingOptions: [
-{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '280 €', priceUsd: '300 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/certified-associate-capm'},
+{type: 'self', label: 'Selbststudium (nur Prüfung)', priceEur: '280 €', priceUsd: '300 USD', provider: 'PMI', url: 'https://www.pmi.org/certifications/certified-associate-project-management-capm'},
 {type: 'course', label: 'Geführter Kurs (inkl. Prüfung)', priceEur: '800–1.500 €', priceUsd: '', provider: 'KAYENTA / ATPs', url: 'https://www.kayenta.de'}
 ],
 
@@ -198,22 +198,22 @@ target:'Analyst, Consultant – Berufseinsteiger:innen',
 goal:'Solides PM-Handwerkszeug, agiles Grundverständnis, effiziente Nutzung von KI.',
 steps:[{certId:'capm',benefit:'Methodisches Grundvokabular'},{certId:'psm1',benefit:'Agile Anschlussfähigkeit'},{certId:'aipm',benefit:'KI-Effizienz im PM-Alltag'}]},
 
-{id:'agile-track',title:'Consultant → Senior Consultant (Agile)',badge:'AGILE DELIVERY',badgeColor:'#D4782F',
+{id:'agile-track',title:'Consultant → Senior Consultant',badge:'AGILE DELIVERY',badgeColor:'#D4782F',
 target:'Consultant, Senior Consultant – Agile IT- & Produktprojekte',
 goal:'Agile Teams, Product Ownership und schnelle Delivery.',
 steps:[{certId:'psm1',benefit:'Scrum-Grundverständnis'},{certId:'psm1',benefit:'Product- & Value-Fokus (PSPO I)',altName:'PSPO I'},{certId:'pmiacp',benefit:'Methodenbreite / Skalierung'}]},
 
-{id:'delivery',title:'Senior Consultant → Manager (Delivery)',badge:'DELIVERY',badgeColor:'#D4782F',
+{id:'delivery',title:'Senior Consultant → Manager',badge:'DELIVERY',badgeColor:'#D4782F',
 target:'Senior Consultant, Manager – IT- & Transformationsprojekte',
 goal:'Projektführung, hybride Steuerung und Enterprise Transformation.',
 steps:[{certId:'pmp',benefit:'Strategische PM-Seniorität'},{certId:'prince2',benefit:'Governance + agile Ausführung'},{certId:'safe',benefit:'Skalierung / Methodenbreite'}]},
 
-{id:'ki-track',title:'Expert → Senior Expert (KI-Track)',badge:'KI & DATA',badgeColor:'#8B3A8B',
+{id:'ki-track',title:'Expert → Senior Expert',badge:'KI & DATA',badgeColor:'#8B3A8B',
 target:'Expert, Senior Expert – KI- & Data-Projektleitung',
 goal:'Steuerung komplexer KI- und Data-Science-Projekte.',
 steps:[{certId:'pmp',benefit:'Solide PM-Governance'},{certId:'cpmai',benefit:'KI-Projekte methodisch steuern'},{certId:'fraunhofer',benefit:'Strategische KI-Beratung'}]},
 
-{id:'governance',title:'Manager → Associate Partner (Governance)',badge:'GOVERNANCE',badgeColor:'#2E8B57',
+{id:'governance',title:'Manager → Associate Partner',badge:'GOVERNANCE',badgeColor:'#2E8B57',
 target:'Manager, Associate Partner – PMO- & Governance-Rollen',
 goal:'C-Level Advisory, PMO-Aufbau, Governance und Value Delivery.',
 steps:[{certId:'ipma',benefit:'Führungskompetenz im DACH-Markt'},{certId:'pmocp',benefit:'Modernes PMO of the Future'},{certId:'p3o',benefit:'Klassische Governance-Umfelder'}]}
@@ -227,7 +227,7 @@ const PROVIDERS=[
 {name:'Haufe Akademie',focus:'Breite PM-Trainings',format:'München / Remote / Blended',note:'Praxisnahe Trainingslandschaft',recommendation:'empfohlen',url:'https://www.haufe-akademie.de'},
 {name:'Scrum.org',focus:'PSM / PSPO',format:'Online-Prüfung / Selbststudium',note:'200 USD, lebenslang gültig',recommendation:'sehr empfohlen',url:'https://www.scrum.org/assessments'},
 {name:'PMI',focus:'PMP, ACP, PMOCP, CPMAI',format:'Online / ATP-Kurse',note:'Globaler Standard',recommendation:'sehr empfohlen',url:'https://www.pmi.org/certifications'},
-{name:'KEGON Academy',focus:'SAFe Trainings',format:'Remote / Präsenz',note:'Autorisierter SAFe Gold Partner',recommendation:'empfohlen',url:'https://www.kegon.de/safe-trainings'},
+{name:'KEGON Academy',focus:'SAFe Trainings',format:'Remote / Präsenz',note:'Autorisierter SAFe Gold Partner',recommendation:'empfohlen',url:'https://kegonacademy.com'},
 {name:'Fraunhofer IAIS/FIT',focus:'KI-Management',format:'3 Wochen Online',note:'3.950 €, hohe DACH-Reputation',recommendation:'empfohlen für KI-Strategie',url:'https://www.bigdata.fraunhofer.de/ki-manager'}
 ];
 

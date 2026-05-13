@@ -82,7 +82,7 @@ const pathMap = {'analyst':'einstieg', 'consultant':'agile-track', 'senior_consu
 const pathMatch=DEVELOPMENT_PATHS.find(p=>p.id===pathMap[finderState.career]);
 el.innerHTML=`<h3>🎯 Deine Top-Empfehlungen</h3><p class="profile">Basierend auf: ${cl?.label} · ${mk?.label} · ${rl?.label}</p>${certs.map((c,i)=>{
 const costHtml = c.bookingOptions ? c.bookingOptions.map(opt => `<span title="${opt.label}">${opt.type==='self'?'📝 Nur Prüfung:':'👨‍🏫 Inkl. Kurs:'} ${opt.priceEur}</span>`).join(' <span style="opacity:0.5; margin:0 4px">|</span> ') : `<span>💰 ${c.costLabel}</span>`;
-return `<div class="result-card" onclick="event.preventDefault(); scrollToCert('${c.id}'); const detail=document.getElementById('detail-${c.id}'); if(detail) detail.style.display='block';" style="display:flex; cursor:pointer" title="Zu den Details springen"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta" style="margin-top:8px">${costHtml} <span style="opacity:0.5; margin:0 4px">|</span> <span>⏱ ${c.effortWeeks}</span> <span style="opacity:0.5; margin:0 4px">|</span> <span class="tooltip-trigger">📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div onclick="event.preventDefault(); document.getElementById('path-${pathMatch.id}').classList.add('open'); document.getElementById('path-${pathMatch.id}').scrollIntoView({behavior:'smooth',block:'center'});" class="result-path" style="display:block; cursor:pointer;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--border)'"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p style="color:var(--text-secondary)">${pathMatch.goal}</p><div style="margin-top:8px; font-size:12px; color:var(--red); font-weight:600">Zum Pfad →</div></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
+return `<div class="result-card" onclick="event.preventDefault(); scrollToCert('${c.id}'); toggleCert('${c.id}', true);" style="display:flex; cursor:pointer" title="Zu den Details springen"><div class="result-rank">${i+1}</div><div class="result-info"><h4>${c.name}</h4><p>${c.shortDescription}</p><div class="result-meta" style="margin-top:8px">${costHtml} <span style="opacity:0.5; margin:0 4px">|</span> <span>⏱ ${c.effortWeeks}</span> <span style="opacity:0.5; margin:0 4px">|</span> <span class="tooltip-trigger">📊 Relevanz: ${c.relevance}/5</span></div></div></div>`}).join('')}${pathMatch?`<div onclick="event.preventDefault(); document.getElementById('path-${pathMatch.id}').classList.add('open'); document.getElementById('path-${pathMatch.id}').scrollIntoView({behavior:'smooth',block:'center'});" class="result-path" style="display:block; cursor:pointer;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--border)'"><strong>🛤️ Empfohlener Entwicklungspfad: ${pathMatch.title}</strong><p style="color:var(--text-secondary)">${pathMatch.goal}</p><div style="margin-top:8px; font-size:12px; color:var(--red); font-weight:600">Zum Pfad →</div></div>`:''}<button class="finder-reset" onclick="initFinder()">↻ Nochmal starten</button>`;
 }
 
 /* CATALOG – grouped by category */
@@ -174,8 +174,11 @@ document.getElementById('cert-grid').before(existing)}
 existing.innerHTML=`Zeige: <strong>${text}</strong> (${shown} von ${total}) <button class="filter-reset-all" onclick="resetAllFilters()">Alle zurücksetzen</button>`;
 }else if(existing){existing.remove()}
 }
-function toggleCert(id){
-document.getElementById('detail-'+id).classList.toggle('visible');
+function toggleCert(id, forceOpen){
+const el=document.getElementById('detail-'+id);
+if(!el) return;
+if(forceOpen===true) el.classList.add('visible');
+else el.classList.toggle('visible');
 }
 
 /* TABLE – with integrated provider info */
